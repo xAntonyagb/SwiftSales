@@ -13,11 +13,16 @@ public class SQLiteDataHelper extends SQLiteOpenHelper{
                             int version) {
         super(context, name, factory, version);
     }
+    /**
+     * Método responsável pela criação das tabelas
+     * Ele executa os scripts no momento de instalação do aplicativo
+     * @param sqLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE CLIENTE (CD_CLIENTE INTEGER,NM_CLIENTE VARCHAR(100), NR_CPF VARCHAR(11), NR_TELEFONE VARCHAR(11), DS_EMAIL VARCHAR(100))");
+        sqLiteDatabase.execSQL("CREATE TABLE CLIENTE (CD_CLIENTE INTEGER(5) PRIMARY KEY,NM_CLIENTE VARCHAR(100), NR_CPF VARCHAR(11), NR_TELEFONE VARCHAR(20), DS_EMAIL VARCHAR(100))");
+        sqLiteDatabase.execSQL("CREATE TABLE ITEM (CD_PRODUTO INTEGER(5) PRIMARY KEY,DS_PRODUTO VARCHAR(100), VL_PRODUTO NUMERIC(10,2), QT_ESTOQUE INTEGER(10))");
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
