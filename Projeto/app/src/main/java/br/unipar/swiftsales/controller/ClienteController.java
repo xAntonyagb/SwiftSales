@@ -76,8 +76,8 @@ public class ClienteController {
         }
         Cliente cliente = ClienteDAO.getInstancia(context).getById(Integer.parseInt(cdCliente));
 
-        if(cliente != null) {
-            return "Código ("+cdCliente+") já cadastrado.";
+        if(cliente == null) {
+            return "O Cliente ("+cdCliente+") não existe.";
         }else {
             cliente = new Cliente();
             cliente.setCdCliente(Integer.parseInt(cdCliente));
@@ -100,8 +100,8 @@ public class ClienteController {
         }
         Cliente cliente = ClienteDAO.getInstancia(context).getById(Integer.parseInt(cdCliente));
 
-        if(cliente != null) {
-            return "Código ("+cdCliente+") já cadastrado.";
+        if(cliente == null) {
+            return "O Cliente ("+cdCliente+") não existe.";
         }else {
             cliente = new Cliente();
             cliente.setCdCliente(Integer.parseInt(cdCliente));
