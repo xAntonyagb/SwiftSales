@@ -20,4 +20,9 @@ public class MainActivity extends AppCompatActivity {
                 ClienteActivity.class);
         startActivity(intent);
     }
+    public void abrirCadastroProduto(View view) {
+        Intent intent = new Intent(MainActivity.this,
+                ProdutoActivity.class);
+        startActivity(intent);
+    }
 }
