@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +22,14 @@ import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.adapter.ClienteListAdapter;
 import br.unipar.swiftsales.controller.ClienteController;
 import br.unipar.swiftsales.model.Cliente;
+import br.unipar.swiftsales.model.Produto;
 
 public class ClienteActivity extends AppCompatActivity {
     private EditText edNome;
     private EditText edTelefone;
     private EditText edEmail;
     private EditText edCpf;
+    private EditText edBuscarCliente;
     private FloatingActionButton btCadastroCliente;
     private AlertDialog cadastroDialog;
     private AlertDialog editDialog;
@@ -48,14 +52,31 @@ public class ClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cliente);
         btCadastroCliente = findViewById(R.id.btCadastroCliente);
         rvClientes = findViewById(R.id.rvClientes);
+        edBuscarCliente = findViewById(R.id.edBuscarCliente);
         controller = new ClienteController(this);
+        edBuscarCliente.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                carregarListaClientes(edBuscarCliente.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         btCadastroCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 abrirMensagem();
             }
         });
-        carregarListaClientes();
+        carregarListaClientes("");
     }
     private void abrirMensagem() {
         //Carregar os compoenentes do AlertDialog
@@ -128,7 +149,7 @@ public class ClienteActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Cliente cadastrado com sucesso.", Toast.LENGTH_LONG).show();
             cadastroDialog.dismiss();
-            carregarListaClientes();
+            carregarListaClientes("");
         }
     }
 
@@ -155,7 +176,7 @@ public class ClienteActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Cliente atualizado com sucesso.", Toast.LENGTH_LONG).show();
             editDialog.dismiss();
-            carregarListaClientes();
+            carregarListaClientes("");
         }
     }
     public void abrirDeletarCliente(Cliente cliente) {
@@ -173,7 +194,7 @@ public class ClienteActivity extends AppCompatActivity {
                     Toast.makeText(ClienteActivity.this, retorno, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(ClienteActivity.this, "Cliente deletado com sucesso.", Toast.LENGTH_LONG).show();
-                    carregarListaClientes();
+                    carregarListaClientes("");
                 }
             }
 
@@ -218,8 +239,13 @@ public class ClienteActivity extends AppCompatActivity {
         editDialog.show();//Mostrar o AlertDialog
     }
 
-    public void carregarListaClientes(){
-        ArrayList<Cliente> listaClientes = controller.retornaListaClientes();
+    public void carregarListaClientes(String nmCliente){
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        if (nmCliente.equals("")){
+            listaClientes = controller.retornaListaClientes();
+        }else {
+            listaClientes = controller.getByListNome(nmCliente);
+        }
         ClienteListAdapter adapter = new ClienteListAdapter(listaClientes, this);
         rvClientes.setLayoutManager(new LinearLayoutManager(this));
         rvClientes.setAdapter(adapter);

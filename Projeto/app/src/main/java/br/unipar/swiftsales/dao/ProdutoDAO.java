@@ -140,4 +140,26 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         }
         return 0;
     }
+    public ArrayList<Produto> getByListDescricao(String dsProduto){
+        ArrayList<Produto> lista = new ArrayList<>();
+        dsProduto += "%";
+        try {
+            String[] identificador = {dsProduto.toUpperCase()};
+            Cursor cursor = bd.rawQuery("SELECT * FROM PRODUTO WHERE DS_PRODUTO LIKE UPPER(?)", identificador);
+            if (cursor.moveToFirst()) {
+                do {
+                    Produto produto = new Produto();
+                    produto.setCdProduto(cursor.getInt(0));
+                    produto.setDsProduto(cursor.getString(1));
+                    produto.setVlProduto(cursor.getDouble(2));
+                    produto.setQtProduto(cursor.getInt(3));
+                    lista.add(produto);
+                } while (cursor.moveToNext());
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Log.e("ERRO","ProdutoDAO.getByDescricao():" +ex.getMessage());
+        }
+        return lista;
+    }
 }

@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +31,7 @@ public class ProdutoActivity extends AppCompatActivity {
     private EditText edValor;
     private EditText edQuantidade;
     private EditText edSenhaAdm;
+    private EditText edBuscarProduto;
     private FloatingActionButton btCadastroProduto;
     private AlertDialog cadastroDialog;
     private AlertDialog senhaAdmDialog;
@@ -55,15 +60,32 @@ public class ProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto);
         btCadastroProduto = findViewById(R.id.btCadastroProduto);
+        edBuscarProduto = findViewById(R.id.edBuscarProduto);
         rvProdutos = findViewById(R.id.rvProdutos);
         controller = new ProdutoController(this);
+        edBuscarProduto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                carregarListaProdutos(edBuscarProduto.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         btCadastroProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 abrirMensagemConfirmacao();
             }
         });
-        carregarListaProdutos();
+        carregarListaProdutos("");
     }
     public void abrirMensagemConfirmacao() {
         //Carregar os compoenentes do AlertDialog
@@ -169,12 +191,16 @@ public class ProdutoActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
             cadastroDialog.dismiss();
-            carregarListaProdutos();
+            carregarListaProdutos("");
         }
     }
-    public void carregarListaProdutos(){
-        ArrayList<Produto> listaProdutos = controller.retornaListaProdutos();
-
+    public void carregarListaProdutos(String dsProduto){
+        ArrayList<Produto> listaProdutos = new ArrayList<>();
+        if (dsProduto.equals("")){
+            listaProdutos = controller.retornaListaProdutos();
+        }else {
+            listaProdutos = controller.getByListDescricao(dsProduto);
+        }
         ProdutoListAdapter adapter = new ProdutoListAdapter(listaProdutos, this);
         rvProdutos.setLayoutManager(new LinearLayoutManager(this));
         rvProdutos.setAdapter(adapter);
@@ -227,7 +253,7 @@ public class ProdutoActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Produto atualizado com sucesso!", Toast.LENGTH_LONG).show();
             editDialog.dismiss();
-            carregarListaProdutos();
+            carregarListaProdutos("");
         }
     }
 
@@ -237,7 +263,11 @@ public class ProdutoActivity extends AppCompatActivity {
             Toast.makeText(this, retorno, Toast.LENGTH_LONG).show();
         }
         Toast.makeText(this, "Produto excluido com sucesso!", Toast.LENGTH_LONG).show();
-        carregarListaProdutos();
+        carregarListaProdutos("");
     }
+    public ArrayList<Produto> getByListDescricao(String dsProduto){
+        return controller.getByListDescricao(dsProduto);
+    }
+
 
 }

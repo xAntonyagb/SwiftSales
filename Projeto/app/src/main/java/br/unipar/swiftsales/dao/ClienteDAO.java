@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Cliente;
 
-public class ClienteDAO implements GenericDAO<Cliente>{
+public class ClienteDAO implements GenericDAO<Cliente> {
     //Variavel para abrir a conexão com BD
     private SQLiteOpenHelper openHelper;
 
@@ -24,7 +24,7 @@ public class ClienteDAO implements GenericDAO<Cliente>{
     private String nomeTabela = "CLIENTE";
 
     //Nome das colunas da tabela
-    private String[]colunas = {"CD_CLIENTE", "NM_CLIENTE","NR_CPF", "DS_EMAIL",  "NR_TELEFONE" };
+    private String[] colunas = {"CD_CLIENTE", "NM_CLIENTE", "NR_CPF", "DS_EMAIL", "NR_TELEFONE"};
 
     private Context context;
 
@@ -39,16 +39,17 @@ public class ClienteDAO implements GenericDAO<Cliente>{
         bd = openHelper.getWritableDatabase();
     }
 
-    public static ClienteDAO getInstancia(Context context){
-        if(instancia == null){
+    public static ClienteDAO getInstancia(Context context) {
+        if (instancia == null) {
             return instancia = new ClienteDAO(context);
-        }else{
+        } else {
             return instancia;
         }
     }
+
     @Override
     public long insert(Cliente obj) {
-        try{
+        try {
             ContentValues valores = new ContentValues();
             valores.put(colunas[0], obj.getCdCliente());
             valores.put(colunas[1], obj.getNmCliente());
@@ -57,8 +58,8 @@ public class ClienteDAO implements GenericDAO<Cliente>{
             valores.put(colunas[4], obj.getNrTelefone());
 
             return bd.insert(nomeTabela, null, valores);
-        }catch(SQLException ex){
-            Log.e("ERRO","ClienteDao.insert():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.insert():" + ex.getMessage());
         }
         return 0;
     }
@@ -75,18 +76,19 @@ public class ClienteDAO implements GenericDAO<Cliente>{
             String[] identificador = {String.valueOf(obj.getCdCliente())};
 
             return bd.update(nomeTabela, valores, colunas[0] + " = ?", identificador);
-        }catch(SQLException ex){
-            Log.e("ERRO","ClienteDao.update():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.update():" + ex.getMessage());
         }
         return 0;
     }
+
     @Override
     public long delete(Cliente obj) {
         try {
             String[] identificador = {String.valueOf(obj.getCdCliente())};
             return bd.delete(nomeTabela, colunas[0] + " = ?", identificador);
-        }catch(SQLException ex){
-            Log.e("ERRO","ClienteDao.delete():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.delete():" + ex.getMessage());
         }
         return 0;
     }
@@ -109,8 +111,8 @@ public class ClienteDAO implements GenericDAO<Cliente>{
                 } while (cursor.moveToNext());
             }
             return lista;
-        }catch (SQLException ex){
-            Log.e("ERRO","ClienteDao.getAll():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.getAll():" + ex.getMessage());
         }
         return lista;
     }
@@ -130,22 +132,46 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 
                 return cliente;
             }
-        }catch (SQLException ex){
-            Log.e("ERRO","ClienteDao.getById():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.getById():" + ex.getMessage());
         }
         return null;
     }
-    public int getProximoCodigo(){
-        try{
+
+    public int getProximoCodigo() {
+        try {
             Cursor cursor = bd.rawQuery("SELECT MAX(CD_CLIENTE) FROM CLIENTE", null);
-            if(cursor.moveToFirst()){
-                return cursor.getInt(0)+1;
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0) + 1;
             }
-        }catch (SQLException ex){
-            Log.e("ERRO","ClienteDao.getProximoCodigo():" +ex.getMessage());
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.getProximoCodigo():" + ex.getMessage());
         }
         return 0;
     }
 
+    public ArrayList<Cliente> getByListNome(String nmCliente) {
+        ArrayList<Cliente> lista = new ArrayList<>();
+        nmCliente += "%";
+        String[] identificador = {nmCliente.toUpperCase()};
+        try {
+            Cursor cursor = bd.query(nomeTabela, colunas, colunas[1] + " LIKE UPPER(?)", identificador, null, null, colunas[1]);
+            if (cursor.moveToFirst()) {
+                do {
+                    Cliente cliente = new Cliente();
+                    cliente.setCdCliente(cursor.getInt(0));
+                    cliente.setNmCliente(cursor.getString(1));
+                    cliente.setNrCpf(cursor.getString(2));
+                    cliente.setDsEmail(cursor.getString(3));
+                    cliente.setNrTelefone(cursor.getString(4));
 
+                    lista.add(cliente);
+                } while (cursor.moveToNext());
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Log.e("ERRO", "ClienteDao.getByListNome():" + ex.getMessage());
+        }
+        return lista;
+    }
 }
