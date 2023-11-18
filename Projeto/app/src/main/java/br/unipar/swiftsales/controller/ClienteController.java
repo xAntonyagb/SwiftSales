@@ -115,4 +115,7 @@ public class ClienteController {
     public Cliente retornaCliente(String cdCliente){
         return ClienteDAO.getInstancia(context).getById(Integer.parseInt(cdCliente));
     }
+    public ArrayList<Cliente> getByListNome(String nmCliente){
+        return ClienteDAO.getInstancia(context).getByListNome(nmCliente);
+    }
 }

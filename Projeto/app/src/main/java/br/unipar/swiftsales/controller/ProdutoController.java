@@ -103,4 +103,7 @@ public class ProdutoController {
     public Produto retornaProduto(String cdProduto){
         return ProdutoDAO.getInstancia(context).getById(Integer.parseInt(cdProduto));
     }
+    public ArrayList<Produto> getByListDescricao(String dsProduto){
+        return ProdutoDAO.getInstancia(context).getByListDescricao(dsProduto);
+    }
 }
