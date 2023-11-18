@@ -10,17 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
-import br.unipar.swiftsales.adapter.ClienteListAdapter;
 import br.unipar.swiftsales.adapter.ProdutoListAdapter;
-import br.unipar.swiftsales.controller.ClienteController;
 import br.unipar.swiftsales.controller.ProdutoController;
-import br.unipar.swiftsales.model.Cliente;
 import br.unipar.swiftsales.model.Produto;
 
 public class ProdutoActivity extends AppCompatActivity {
@@ -36,6 +34,7 @@ public class ProdutoActivity extends AppCompatActivity {
     private AlertDialog deleteDialog;
     private ProdutoController controller;
     private RecyclerView rvProdutos;
+    private boolean stSenha;
 
     public static ProdutoActivity instancia;
     public ProdutoActivity(){
@@ -43,6 +42,12 @@ public class ProdutoActivity extends AppCompatActivity {
     }
     public static ProdutoActivity getInstancia(){
         return instancia;
+    }
+    public void setStSenha(boolean stSenha){
+        this.stSenha = stSenha;
+    }
+    public boolean getStSenha(){
+        return this.stSenha;
     }
 
     @Override
@@ -55,12 +60,12 @@ public class ProdutoActivity extends AppCompatActivity {
         btCadastroProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abrirMensagem();
+                abrirMensagemConfirmacao();
             }
         });
         carregarListaProdutos();
     }
-    public void abrirMensagem() {
+    public void abrirMensagemConfirmacao() {
         //Carregar os compoenentes do AlertDialog
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Cadastrar"); //Titulo
@@ -70,15 +75,16 @@ public class ProdutoActivity extends AppCompatActivity {
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                abrirSenhaAdm();
+                abrirSenhaAdm("cadastrar", null);
             }
 
         });//Botão de salvar
         AlertDialog dialog = builder.create();//Criar o AlertDialog
         dialog.show();//Mostrar o AlertDialog
     }
-    public void abrirSenhaAdm() {
+    public void abrirSenhaAdm(String tipoAcao, Produto produto) {
         //Carregar o layout do AlertDialog
+
         View viewAlert = getLayoutInflater().inflate(R.layout.dialog_senha_adm, null);
         edSenhaAdm = viewAlert.findViewById(R.id.edSenhaAdm);
         //Carregar os compoenentes do AlertDialog
@@ -92,13 +98,21 @@ public class ProdutoActivity extends AppCompatActivity {
         senhaAdmDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
+
                 Button btSalvar = senhaAdmDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 btSalvar.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
                         if (edSenhaAdm.getText().toString().equals("1234")) {
-                            abrirCadastroProduto();
                             senhaAdmDialog.dismiss();//fechar o AlertDialog
+                            if (tipoAcao == "alterar") {
+                                abrirAlterarProduto(produto);
+                            }else if (tipoAcao == "excluir") {
+                                excluirProduto(produto);
+                            }else if (tipoAcao == "cadastrar") {
+                                abrirCadastroProduto();
+                            }
                         } else {
                             edSenhaAdm.setError("Senha incorreta!");
                         }
@@ -153,6 +167,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 edQuantidade.requestFocus();
             }
         } else {
+            Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
             cadastroDialog.dismiss();
             carregarListaProdutos();
         }
@@ -164,8 +179,65 @@ public class ProdutoActivity extends AppCompatActivity {
         rvProdutos.setLayoutManager(new LinearLayoutManager(this));
         rvProdutos.setAdapter(adapter);
     }
+    public void abrirAlterarProduto(Produto produto){
+        //Carregar o layout do AlertDialog
+        View viewAlert = getLayoutInflater().inflate(R.layout.dialog_edit_produto, null);
+        edDescricao = viewAlert.findViewById(R.id.edDescricao);
+        edValor = viewAlert.findViewById(R.id.edValor);
+        edQuantidade = viewAlert.findViewById(R.id.edQuantidade);
+        edDescricao.setText(produto.getDsProduto());
+        edValor.setText(String.valueOf(produto.getVlProduto()));
+        edQuantidade.setText(String.valueOf(produto.getQtProduto()));
+        //Carregar os compoenentes do AlertDialog
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Alterar Produto"); //Titulo
+        builder.setView(viewAlert); //Carregar o layout
+        builder.setCancelable(false);//Não permite cancelar o AlertDialog
+        builder.setNegativeButton("Cancelar", null);//Botão de cancelar
+        builder.setPositiveButton("Salvar", null);//Botão de salvar
+        editDialog = builder.create();//Criar o AlertDialog
+        editDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button btSalvar = editDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                btSalvar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alterarProduto(produto);
+                    }
+                });
+            }
+        });
+        editDialog.show();//Mostrar o AlertDialog
 
+    }
+    public void alterarProduto(Produto produto){
+        String retorno = controller.alterarProduto(String.valueOf(produto.getCdProduto()), edDescricao.getText().toString(), edValor.getText().toString(), edQuantidade.getText().toString());
+        if (retorno != null) {
+            if (retorno.contains("Descrição")) {
+                edDescricao.setError(retorno);
+                edDescricao.requestFocus();
+            } else if (retorno.contains("Valor")) {
+                edValor.setError(retorno);
+                edValor.requestFocus();
+            } else if (retorno.contains("Quantidade")) {
+                edQuantidade.setError(retorno);
+                edQuantidade.requestFocus();
+            }
+        } else {
+            Toast.makeText(this, "Produto atualizado com sucesso!", Toast.LENGTH_LONG).show();
+            editDialog.dismiss();
+            carregarListaProdutos();
+        }
+    }
 
-
+    public void excluirProduto(Produto produto){
+        String retorno = controller.excluirProduto(String.valueOf(produto.getCdProduto()));
+        if (retorno != null) {
+            Toast.makeText(this, retorno, Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(this, "Produto excluido com sucesso!", Toast.LENGTH_LONG).show();
+        carregarListaProdutos();
+    }
 
 }
