@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
-import br.unipar.swiftsales.model.Cliente;
 import br.unipar.swiftsales.model.Produto;
-import br.unipar.swiftsales.view.ClienteActivity;
 import br.unipar.swiftsales.view.ProdutoActivity;
 
 public class ProdutoListAdapter extends RecyclerView.Adapter<ProdutoListAdapter.ProdutoViewHolder> {
@@ -42,22 +40,21 @@ public class ProdutoListAdapter extends RecyclerView.Adapter<ProdutoListAdapter.
         holder.tvValor.setText(String.valueOf(produto.getVlProduto()));
         holder.tvQuantidade.setText(String.valueOf(produto.getQtProduto()));
         holder.tvCodigo.setText(String.valueOf(produto.getCdProduto()));
-        /*
+
         holder.btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProdutoActivity.getInstancia().();
+                ProdutoActivity.getInstancia().abrirSenhaAdm("alterar",produto);
             }
         });
         holder.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProdutoActivity.getInstancia().abrirDeletarCliente(cliente);
+                ProdutoActivity.getInstancia().abrirSenhaAdm("excluir",produto);
             }
         });
-        */
-    }
 
+    }
 
 
     @Override
@@ -75,9 +72,9 @@ public class ProdutoListAdapter extends RecyclerView.Adapter<ProdutoListAdapter.
 
         public ProdutoViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvDescricao = itemView.findViewById(R.id.tvNome);
-            tvValor = itemView.findViewById(R.id.tvTelefone);
-            tvQuantidade = itemView.findViewById(R.id.tvEmail);
+            tvDescricao = itemView.findViewById(R.id.tvDescricao);
+            tvValor = itemView.findViewById(R.id.tvValor);
+            tvQuantidade = itemView.findViewById(R.id.tvQuantidade);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
             btEdit = itemView.findViewById(R.id.btEdit);
             btDelete = itemView.findViewById(R.id.btDelete);
