@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BotaoIncremento">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Estilo específico para o botão de incremento -->
+        <item name="android:text">+</item>
+    </style>
+
+    <style name="BotaoDecremento">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Estilo específico para o botão de decremento -->
+        <item name="android:text">-</item>
+    </style>
+</resources>
