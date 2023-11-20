@@ -22,6 +22,7 @@ public class SQLiteDataHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE CLIENTE (CD_CLIENTE INTEGER(5) PRIMARY KEY,NM_CLIENTE VARCHAR(100), NR_CPF VARCHAR(11), NR_TELEFONE VARCHAR(20), DS_EMAIL VARCHAR(100))");
         sqLiteDatabase.execSQL("CREATE TABLE PRODUTO (CD_PRODUTO INTEGER(5) PRIMARY KEY,DS_PRODUTO VARCHAR(100), VL_PRODUTO NUMERIC(10,2), QT_ESTOQUE INTEGER(10))");
+        sqLiteDatabase.execSQL("CREATE TABLE VENDEDOR (CD_VENDEDOR INTEGER(5) PRIMARY KEY,NM_VENDEDOR VARCHAR(100))");
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
