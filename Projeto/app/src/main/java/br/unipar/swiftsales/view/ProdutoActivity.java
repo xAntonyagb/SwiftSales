@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class ProdutoActivity extends AppCompatActivity {
     private ProdutoController controller;
     private RecyclerView rvProdutos;
     private boolean stSenha;
+    private ImageView ivVoltar;
 
     public static ProdutoActivity instancia;
     public ProdutoActivity(){
@@ -63,6 +65,10 @@ public class ProdutoActivity extends AppCompatActivity {
         edBuscarProduto = findViewById(R.id.edBuscarProduto);
         rvProdutos = findViewById(R.id.rvProdutos);
         controller = new ProdutoController(this);
+
+        ivVoltar = findViewById(R.id.ivVoltar);
+        ivVoltar.setOnClickListener(view -> finish());
+
         edBuscarProduto.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

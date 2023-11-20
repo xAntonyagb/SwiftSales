@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +38,8 @@ public class ClienteActivity extends AppCompatActivity {
     private ClienteController controller;
     private RecyclerView rvClientes;
 
+    private ImageView ivVoltar;
+
     public static ClienteActivity instancia;
 
     public ClienteActivity(){
@@ -54,6 +57,10 @@ public class ClienteActivity extends AppCompatActivity {
         rvClientes = findViewById(R.id.rvClientes);
         edBuscarCliente = findViewById(R.id.edBuscarCliente);
         controller = new ClienteController(this);
+
+        ivVoltar = findViewById(R.id.ivVoltar);
+        ivVoltar.setOnClickListener(view -> finish());
+
         edBuscarCliente.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
