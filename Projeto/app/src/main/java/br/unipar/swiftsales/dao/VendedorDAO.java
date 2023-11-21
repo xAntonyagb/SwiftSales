@@ -137,7 +137,7 @@ public class VendedorDAO implements GenericDAO<Vendedor>{
         dsProduto += "%";
         try {
             String[] identificador = {dsProduto.toUpperCase()};
-            Cursor cursor = db.rawQuery("SELECT * FROM"+ nomeTabela +"WHERE"+ colunas[1] +"LIKE UPPER(?)", identificador);
+            Cursor cursor = db.query(nomeTabela, colunas, colunas[1] + " LIKE UPPER(?)", identificador, null, null, colunas[1]);
             if (cursor.moveToFirst()) {
                 do {
                     Vendedor vendedor = new Vendedor();

@@ -205,7 +205,7 @@ public class ProdutoActivity extends AppCompatActivity {
         if (dsProduto.equals("")){
             listaProdutos = controller.retornaListaProdutos();
         }else {
-            listaProdutos = controller.getByListDescricao(dsProduto);
+            listaProdutos = controller.getByListNome(dsProduto);
         }
         ProdutoListAdapter adapter = new ProdutoListAdapter(listaProdutos, this);
         rvProdutos.setLayoutManager(new LinearLayoutManager(this));
@@ -272,7 +272,7 @@ public class ProdutoActivity extends AppCompatActivity {
         carregarListaProdutos("");
     }
     public ArrayList<Produto> getByListDescricao(String dsProduto){
-        return controller.getByListDescricao(dsProduto);
+        return controller.getByListNome(dsProduto);
     }
 
 

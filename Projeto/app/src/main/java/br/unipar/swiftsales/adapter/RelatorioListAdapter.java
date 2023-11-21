@@ -38,7 +38,7 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
     public void onBindViewHolder(@NonNull RelatorioListAdapter.ClienteViewHolder holder, int position) {
         Caixa caixa = listaCaixa.get(position);
         holder.tvCodigo.setText(caixa.getNrCaixa());
-        holder.tvStatus.setText(caixa.getStCaixa().toUpperCase().replace("A", "ABERTO").replace("F", "FECHADO"));
+        holder.tvStatus.setText(caixa.getStCaixa().descricao);
         holder.tvVlInicial.setText(String.valueOf(caixa.getVlInicial()));
         holder.tvVlFinal.setText(String.valueOf(caixa.getVlFinal()));
         holder.tvData.setText(String.format(caixa.getDtCaixa(), "dd/MM/yyyy"));
