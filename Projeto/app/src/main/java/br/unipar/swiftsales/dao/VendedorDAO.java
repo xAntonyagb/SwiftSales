@@ -120,6 +120,7 @@ public class VendedorDAO implements GenericDAO<Vendedor>{
         }
         return null;
     }
+
     public int getProximoCodigo(){
         try {
             Cursor cursor = db.rawQuery("SELECT MAX(" + colunas[0] + ") FROM "+ nomeTabela, null);
