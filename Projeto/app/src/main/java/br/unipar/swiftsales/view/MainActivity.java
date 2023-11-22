@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toolbar;
 
 import br.unipar.swiftsales.R;
+import br.unipar.swiftsales.model.VendasActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
     public void abrirCaixa(View view) {
         Intent intent = new Intent(MainActivity.this,
                 CaixaActivity.class);
+        startActivity(intent);
+    }
+    public void abrirLancarVenda(View view) {
+        Intent intent = new Intent(MainActivity.this,
+                VendasActivity.class);
         startActivity(intent);
     }
 
