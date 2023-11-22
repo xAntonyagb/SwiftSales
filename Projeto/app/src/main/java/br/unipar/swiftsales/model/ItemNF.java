@@ -1,9 +1,12 @@
 package br.unipar.swiftsales.model;
 
+import kotlin.jvm.internal.PropertyReference0Impl;
+
 public class ItemNF {
-    private NotaFiscal notaFiscal;
+    private int nrNotaFiscal;
     private Produto produto;
-    private double vlTotalItem;
+
+    private double vlUnitItem;
     private double vlDesconto;
     private double vlSubTotal;
     private int qtProduto;
@@ -11,22 +14,21 @@ public class ItemNF {
     public ItemNF() {
     }
 
-    public ItemNF(NotaFiscal notaFiscal, Produto produto, double vlTotalItem, double vlDesconto, double vlSubTotal, int qtProduto) {
-        this.notaFiscal = notaFiscal;
+    public ItemNF(int nrNotaFiscal, Produto produto, double vlUnitItem, double vlDesconto, double vlSubTotal, int qtProduto) {
+        this.nrNotaFiscal = nrNotaFiscal;
         this.produto = produto;
-        this.vlTotalItem = vlTotalItem;
+        this.vlUnitItem = vlUnitItem;
         this.vlDesconto = vlDesconto;
         this.vlSubTotal = vlSubTotal;
         this.qtProduto = qtProduto;
     }
 
-
-    public NotaFiscal getNotaFiscal() {
-        return notaFiscal;
+    public int getNrNotaFiscal() {
+        return nrNotaFiscal;
     }
 
-    public void setNotaFiscal(NotaFiscal notaFiscal) {
-        this.notaFiscal = notaFiscal;
+    public void setNrNotaFiscal(int nrNotaFiscal) {
+        this.nrNotaFiscal = nrNotaFiscal;
     }
 
     public Produto getProduto() {
@@ -37,12 +39,12 @@ public class ItemNF {
         this.produto = produto;
     }
 
-    public double getVlTotalItem() {
-        return vlTotalItem;
+    public double getVlUnitItem() {
+        return vlUnitItem;
     }
 
-    public void setVlTotalItem(double vlTotalItem) {
-        this.vlTotalItem = vlTotalItem;
+    public void setVlUnitItem(double vlUnitItem) {
+        this.vlUnitItem = vlUnitItem;
     }
 
     public double getVlDesconto() {
@@ -72,9 +74,9 @@ public class ItemNF {
     @Override
     public String toString() {
         return "ItemNF{" +
-                "notaFiscal=" + notaFiscal +
+                "nrNotaFiscal=" + nrNotaFiscal +
                 ", produto=" + produto +
-                ", vlTotalItem=" + vlTotalItem +
+                ", vlUnitItem=" + vlUnitItem +
                 ", vlDesconto=" + vlDesconto +
                 ", vlSubTotal=" + vlSubTotal +
                 ", qtProduto=" + qtProduto +

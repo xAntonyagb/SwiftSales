@@ -38,11 +38,10 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
     public void onBindViewHolder(@NonNull RelatorioListAdapter.ClienteViewHolder holder, int position) {
         Caixa caixa = listaCaixa.get(position);
         holder.tvCodigo.setText(caixa.getNrCaixa());
-        holder.tvStatus.setText(caixa.getStCaixa().toUpperCase().replace("A", "ABERTO").replace("F", "FECHADO"));
+        holder.tvStatus.setText(caixa.getStCaixa().descricao);
         holder.tvVlInicial.setText(String.valueOf(caixa.getVlInicial()));
         holder.tvVlFinal.setText(String.valueOf(caixa.getVlFinal()));
         holder.tvData.setText(String.format(caixa.getDtCaixa(), "dd/MM/yyyy"));
-        holder.tvVendedor.setText(caixa.getVendedor().getNmVendedor());
     }
 
 
@@ -58,7 +57,6 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
         private TextView tvVlFinal;
         private TextView tvData;
         private TextView tvCodigo;
-        private TextView tvVendedor;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +65,6 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
             tvVlFinal = itemView.findViewById(R.id.tvVlFinal);
             tvData = itemView.findViewById(R.id.tvData);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
-            tvVendedor = itemView.findViewById(R.id.tvVendedor);
 
         }
     }

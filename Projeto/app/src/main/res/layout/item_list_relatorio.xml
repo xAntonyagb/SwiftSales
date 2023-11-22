@@ -125,37 +125,7 @@
                     android:paddingRight="2dp"
                     android:layout_weight="1" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:layout_weight="3"
-                    android:text="Vendedor" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvVendedor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"/>
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

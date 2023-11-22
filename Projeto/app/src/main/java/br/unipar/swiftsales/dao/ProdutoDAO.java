@@ -129,6 +129,7 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         }
         return null;
     }
+
     public int getProximoCodigo(){
         try {
             Cursor cursor = bd.rawQuery("SELECT MAX(CD_PRODUTO) FROM PRODUTO", null);
@@ -140,7 +141,7 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         }
         return 0;
     }
-    public ArrayList<Produto> getByListDescricao(String dsProduto){
+    public ArrayList<Produto> getByListNome(String dsProduto){
         ArrayList<Produto> lista = new ArrayList<>();
         dsProduto += "%";
         try {

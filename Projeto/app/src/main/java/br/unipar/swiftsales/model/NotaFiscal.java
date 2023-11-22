@@ -2,23 +2,28 @@ package br.unipar.swiftsales.model;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import br.unipar.swiftsales.enums.FormaPagamentoEnum;
 
 public class NotaFiscal {
-    private int nr_nota_fiscal;
-    private int vl_nota_fiscal;
-    private String dt_nota_fiscal;
-    private String nr_chave_acesso;
+    private int nrNotaFiscal;
+    private ArrayList<ItemNF> listaItens;
+    private int nrCaixa;
+    private double vlNotaFiscal;
+    private String dtEmissao;
+    private String nrChaveAcesso;
     private Vendedor vendedor;
     private Cliente cliente;
     private FormaPagamentoEnum formaPagamento;
 
-    public NotaFiscal(int nr_nota_fiscal, int vl_nota_fiscal, String dt_nota_fiscal, String nr_chave_acesso, Vendedor vendedor, Cliente cliente, FormaPagamentoEnum formaPagamento) {
-        this.nr_nota_fiscal = nr_nota_fiscal;
-        this.vl_nota_fiscal = vl_nota_fiscal;
-        this.dt_nota_fiscal = dt_nota_fiscal;
-        this.nr_chave_acesso = nr_chave_acesso;
+    public NotaFiscal(int nrNotaFiscal, ArrayList<ItemNF> listaItens, int nrCaixa, double vlNotaFiscal, String dtEmissao, String nrChaveAcesso, Vendedor vendedor, Cliente cliente, FormaPagamentoEnum formaPagamento) {
+        this.nrNotaFiscal = nrNotaFiscal;
+        this.listaItens = listaItens;
+        this.nrCaixa = nrCaixa;
+        this.vlNotaFiscal = vlNotaFiscal;
+        this.dtEmissao = dtEmissao;
+        this.nrChaveAcesso = nrChaveAcesso;
         this.vendedor = vendedor;
         this.cliente = cliente;
         this.formaPagamento = formaPagamento;
@@ -27,36 +32,36 @@ public class NotaFiscal {
     public NotaFiscal() {
     }
 
-    public int getNr_nota_fiscal() {
-        return nr_nota_fiscal;
+    public int getNrNotaFiscal() {
+        return nrNotaFiscal;
     }
 
-    public void setNr_nota_fiscal(int nr_nota_fiscal) {
-        this.nr_nota_fiscal = nr_nota_fiscal;
+    public void setNrNotaFiscal(int nrNotaFiscal) {
+        this.nrNotaFiscal = nrNotaFiscal;
     }
 
-    public int getVl_nota_fiscal() {
-        return vl_nota_fiscal;
+    public double getVlNotaFiscal() {
+        return vlNotaFiscal;
     }
 
-    public void setVl_nota_fiscal(int vl_nota_fiscal) {
-        this.vl_nota_fiscal = vl_nota_fiscal;
+    public void setVlNotaFiscal(double vlNotaFiscal) {
+        this.vlNotaFiscal = vlNotaFiscal;
     }
 
-    public String getDt_nota_fiscal() {
-        return dt_nota_fiscal;
+    public String getDtEmissao() {
+        return dtEmissao;
     }
 
-    public void setDt_nota_fiscal(String dt_nota_fiscal) {
-        this.dt_nota_fiscal = dt_nota_fiscal;
+    public void setDtEmissao(String dtEmissao) {
+        this.dtEmissao = dtEmissao;
     }
 
-    public String getNr_chave_acesso() {
-        return nr_chave_acesso;
+    public String getNrChaveAcesso() {
+        return nrChaveAcesso;
     }
 
-    public void setNr_chave_acesso(String nr_chave_acesso) {
-        this.nr_chave_acesso = nr_chave_acesso;
+    public void setNrChaveAcesso(String nrChaveAcesso) {
+        this.nrChaveAcesso = nrChaveAcesso;
     }
 
     public Vendedor getVendedor() {
@@ -83,17 +88,34 @@ public class NotaFiscal {
         this.formaPagamento = formaPagamento;
     }
 
+    public ArrayList<ItemNF> getListaItens() {
+        return listaItens;
+    }
+
+    public void setListaItens(ArrayList<ItemNF> listaItens) {
+        this.listaItens = listaItens;
+    }
+
+    public int getNrCaixa() {
+        return nrCaixa;
+    }
+
+    public void setNrCaixa(int nrCaixa) {
+        this.nrCaixa = nrCaixa;
+    }
 
     @Override
     public String toString() {
         return "NotaFiscal{" +
-                "nr_nota_fiscal=" + nr_nota_fiscal +
-                ", vl_nota_fiscal=" + vl_nota_fiscal +
-                ", dt_nota_fiscal=" + dt_nota_fiscal +
-                ", nr_chave_acesso='" + nr_chave_acesso + '\'' +
-                ", vendedor=" + vendedor +
-                ", cliente=" + cliente +
+                "nrNotaFiscal=" + nrNotaFiscal +
+                ", vlNotaFiscal=" + vlNotaFiscal +
+                ", dtEmissao='" + dtEmissao + '\'' +
+                ", nrChaveAcesso='" + nrChaveAcesso + '\'' +
+                ", vendedor=" + vendedor.getNmVendedor() +
+                ", cliente=" + cliente.getNmCliente() +
                 ", formaPagamento=" + formaPagamento.descricao +
+                ", nrCaixa=" + nrCaixa +
+                ", listaItens=" + listaItens.toString() +
                 '}';
     }
 }
