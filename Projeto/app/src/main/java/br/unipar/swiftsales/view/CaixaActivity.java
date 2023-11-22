@@ -26,10 +26,10 @@ public class CaixaActivity extends AppCompatActivity {
 
         ivVoltar = findViewById(R.id.ivVoltar);
         ivVoltar.setOnClickListener(view -> finish());
-
         edCaixaFechado = findViewById(R.id.edCaixaFechado);
         btFecharCaixa = findViewById(R.id.btFecharCaixa);
         btAbrirCaixa = findViewById(R.id.btAbrirCaixa);
+
 
 
 
