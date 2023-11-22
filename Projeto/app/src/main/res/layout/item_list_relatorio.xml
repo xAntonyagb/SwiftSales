@@ -78,21 +78,21 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:layout_weight="3"
-                    android:text="Valor Inicial" />
+                    android:text="Qtd. Vendas" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:layout_weight="2"
-                    android:text="Valor Final" />
+                    android:layout_weight="3"
+                    android:text="Valor Total" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:text="Data" />
             </LinearLayout>
             <LinearLayout
@@ -102,15 +102,15 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvVlInicial"
+                    android:id="@+id/tvQuantidadeVendas"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="2" />
 
                 <TextView
-                    android:id="@+id/tvVlFinal"
+                    android:id="@+id/tvValorTotalVendas"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
