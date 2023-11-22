@@ -55,7 +55,7 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
         private TextView tvData;
         private TextView tvCodigo;
         private TextView tvQuantidadeVendas;
-        private TextView tvValorTotalVendas;
+        private TextView tvVlSaldo;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,7 +63,7 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
             tvData = itemView.findViewById(R.id.tvData);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
             tvQuantidadeVendas = itemView.findViewById(R.id.tvQuantidadeVendas);
-            tvValorTotalVendas = itemView.findViewById(R.id.tvValorTotalVendas);
+            tvVlSaldo = itemView.findViewById(R.id.tvVlSaldo);
         }
     }
 }
