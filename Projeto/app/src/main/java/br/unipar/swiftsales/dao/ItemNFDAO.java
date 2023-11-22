@@ -18,7 +18,7 @@ import br.unipar.swiftsales.model.NotaFiscal;
 import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.model.Vendedor;
 
-public class ItemNFDAO implements GenericDAO<ItemNF> {
+public class ItemNFDAO {
 
     //Variavel para abrir a conexão com BD
     private SQLiteOpenHelper openHelper;
@@ -30,7 +30,8 @@ public class ItemNFDAO implements GenericDAO<ItemNF> {
     private String nomeTabela = "ITEMNF";
 
     //Nome das colunas da tabela
-    private String[]colunas = {"NR_ITEM_NOTAFISCAL", "NR_NOTAFISCAL", "CD_PRODUTO", "VL_UNITITEM", "VL_DESCONTO", "VL_SUBTOTAL", "QT_PRODUTO"};
+
+    private String[] colunas = {"NR_NOTAFISCAL", "CD_PRODUTO", "VL_UNITITEM", "VL_DESCONTO", "VL_SUBTOTAL", "QT_PRODUTO"};
 
     private Context context;
 
@@ -51,17 +52,16 @@ public class ItemNFDAO implements GenericDAO<ItemNF> {
             return instancia;
         }
     }
-    @Override
+
     public long insert(ItemNF obj) {
         try {
             ContentValues valores = new ContentValues();
-            valores.put(colunas[0], obj.getNrItemNotaFiscal());
-            valores.put(colunas[1], obj.getNotaFiscal().getNrNotaFiscal());
-            valores.put(colunas[2], obj.getProduto().getCdProduto());
-            valores.put(colunas[3], obj.getVlUnitItem());
-            valores.put(colunas[4], obj.getVlDesconto());
-            valores.put(colunas[5], obj.getVlSubTotal());
-            valores.put(colunas[6], obj.getQtProduto());
+            valores.put(colunas[0], obj.getNrNotaFiscal());
+            valores.put(colunas[1], obj.getProduto().getCdProduto());
+            valores.put(colunas[2], obj.getVlUnitItem());
+            valores.put(colunas[3], obj.getVlDesconto());
+            valores.put(colunas[4], obj.getVlSubTotal());
+            valores.put(colunas[5], obj.getQtProduto());
 
             return db.insert(nomeTabela, null, valores);
         } catch (SQLException ex) {
@@ -70,152 +70,60 @@ public class ItemNFDAO implements GenericDAO<ItemNF> {
         return 0;
     }
 
-    @Override
     public long update(ItemNF obj) {
         try {
             ContentValues valores = new ContentValues();
-            valores.put(colunas[0], obj.getNrItemNotaFiscal());
-            valores.put(colunas[1], obj.getNotaFiscal().getNrNotaFiscal());
-            valores.put(colunas[2], obj.getProduto().getCdProduto());
-            valores.put(colunas[3], obj.getVlUnitItem());
-            valores.put(colunas[4], obj.getVlDesconto());
-            valores.put(colunas[5], obj.getVlSubTotal());
-            valores.put(colunas[6], obj.getQtProduto());
+            valores.put(colunas[0], obj.getNrNotaFiscal());
+            valores.put(colunas[1], obj.getProduto().getCdProduto());
+            valores.put(colunas[2], obj.getVlUnitItem());
+            valores.put(colunas[3], obj.getVlDesconto());
+            valores.put(colunas[4], obj.getVlSubTotal());
+            valores.put(colunas[5], obj.getQtProduto());
 
-            String[] identificador = {String.valueOf(obj.getNrItemNotaFiscal())};
+            String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
 
-            return db.update(nomeTabela, valores, colunas[0] + " = ?", identificador);
+            return db.update(nomeTabela, valores, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.update():" +ex.getMessage());
         }
         return 0;
     }
-    @Override
+
     public long delete(ItemNF obj) {
         try {
-            String[] identificador = {String.valueOf(obj.getNrItemNotaFiscal())};
-            return db.delete(nomeTabela, colunas[0] + " = ?", identificador);
+            String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
+            return db.delete(nomeTabela, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.delete():" +ex.getMessage());
         }
         return 0;
     }
-    @Override
-    public ArrayList<ItemNF> getAll() {
-        ArrayList<ItemNF> lista = new ArrayList<>();
-        try {
-            //Executa a consulta
-            Cursor cursor = db.query(nomeTabela, colunas, null, null, null, null, colunas[0]);
-            //Percorre o cursor
-            if (cursor.moveToFirst()) {
-                do {
-                    ItemNF itemNF = new ItemNF();
 
-                    itemNF.setNrItemNotaFiscal(cursor.getInt(0));
 
-                    // Procurando e setando a Nota Fiscal pelo código no banco de dados
-                    int codNotaFiscal = cursor.getInt(1);
-                    NotaFiscal notaFiscal = NotaFiscalDAO.getInstancia(context).getById(codNotaFiscal);
-                    itemNF.setNotaFiscal(notaFiscal);
-
-                    // Procurando e setando o produto pelo código no banco de dados
-                    int codProduto = cursor.getInt(2);
-                    Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
-                    itemNF.setProduto(produto);
-
-                    itemNF.setVlUnitItem(cursor.getDouble(3));
-                    itemNF.setVlDesconto(cursor.getDouble(4));
-                    itemNF.setVlSubTotal(cursor.getDouble(5));
-                    itemNF.setQtProduto(cursor.getInt(6));
-
-                    lista.add(itemNF);
-                } while (cursor.moveToNext());
-            }
-            return lista;
-        } catch (SQLException ex) {
-            Log.e("ERRO","ItemNFDAO.getAll():" +ex.getMessage());
-        }
-        return lista;
-    }
-    @Override
-    public ItemNF getById(int id) {
+    public ItemNF getById(ItemNF obj) {
         ItemNF itemNF = new ItemNF();
         try {
-            String[] identificador = {String.valueOf(id)};
-            Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " = ?", identificador, null, null, null);
+            String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
+            Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador, null, null, null);
             if (cursor.moveToFirst()) {
 
-                itemNF.setNrItemNotaFiscal(cursor.getInt(0));
-
-                // Procurando e setando a Nota Fiscal pelo código no banco de dados
-                int codNotaFiscal = cursor.getInt(1);
-                NotaFiscal notaFiscal = NotaFiscalDAO.getInstancia(context).getById(codNotaFiscal);
-                itemNF.setNotaFiscal(notaFiscal);
+                itemNF.setNrNotaFiscal(cursor.getInt(0));
 
                 // Procurando e setando o produto pelo código no banco de dados
-                int codProduto = cursor.getInt(2);
+                int codProduto = cursor.getInt(1);
                 Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
                 itemNF.setProduto(produto);
 
-                itemNF.setVlUnitItem(cursor.getDouble(3));
-                itemNF.setVlDesconto(cursor.getDouble(4));
-                itemNF.setVlSubTotal(cursor.getDouble(5));
-                itemNF.setQtProduto(cursor.getInt(6));
+                itemNF.setVlUnitItem(cursor.getDouble(2));
+                itemNF.setVlDesconto(cursor.getDouble(3));
+                itemNF.setVlSubTotal(cursor.getDouble(4));
+                itemNF.setQtProduto(cursor.getInt(5));
             }
             return itemNF;
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.getById():" +ex.getMessage());
         }
         return null;
-    }
-
-    public int getProximoCodigo(){
-        try {
-            Cursor cursor = db.rawQuery("SELECT MAX(" + colunas[0] + ") FROM "+ nomeTabela, null);
-            if (cursor.moveToFirst()) {
-                return cursor.getInt(0) + 1;
-            }
-        }catch (SQLException ex){
-            Log.e("ERRO","ItemNFDAO.getProximoCodigo():" +ex.getMessage());
-        }
-        return 0;
-    }
-
-    public ArrayList<ItemNF> getByListNome(String nrItemNotaFiscal){
-        ArrayList<ItemNF> lista = new ArrayList<>();
-        nrItemNotaFiscal += "%";
-        try {
-            String[] identificador = {nrItemNotaFiscal};
-            Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " LIKE ?", identificador, null, null, colunas[1]);
-            if (cursor.moveToFirst()) {
-                do {
-                    ItemNF itemNF = new ItemNF();
-                    itemNF.setNrItemNotaFiscal(cursor.getInt(0));
-
-                    // Procurando e setando a Nota Fiscal pelo código no banco de dados
-                    int codNotaFiscal = cursor.getInt(1);
-                    NotaFiscal notaFiscal = NotaFiscalDAO.getInstancia(context).getById(codNotaFiscal);
-                    itemNF.setNotaFiscal(notaFiscal);
-
-                    // Procurando e setando o produto pelo código no banco de dados
-                    int codProduto = cursor.getInt(2);
-                    Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
-                    itemNF.setProduto(produto);
-
-                    itemNF.setVlUnitItem(cursor.getDouble(3));
-                    itemNF.setVlDesconto(cursor.getDouble(4));
-                    itemNF.setVlSubTotal(cursor.getDouble(5));
-                    itemNF.setQtProduto(cursor.getInt(6));
-
-
-                    lista.add(itemNF);
-                } while (cursor.moveToNext());
-            }
-            return lista;
-        } catch (SQLException ex) {
-            Log.e("ERRO","ItemNFDAO.getByListNome():" +ex.getMessage());
-        }
-        return lista;
     }
 
 }

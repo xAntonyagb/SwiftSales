@@ -3,10 +3,9 @@ package br.unipar.swiftsales.model;
 import kotlin.jvm.internal.PropertyReference0Impl;
 
 public class ItemNF {
-
-    private int nrItemNotaFiscal;
-    private NotaFiscal notaFiscal;
+    private int nrNotaFiscal;
     private Produto produto;
+
     private double vlUnitItem;
     private double vlDesconto;
     private double vlSubTotal;
@@ -15,9 +14,8 @@ public class ItemNF {
     public ItemNF() {
     }
 
-    public ItemNF(int nrItemNotaFiscal, NotaFiscal notaFiscal, Produto produto, double vlUnitItem, double vlDesconto, double vlSubTotal, int qtProduto) {
-        this.nrItemNotaFiscal = nrItemNotaFiscal;
-        this.notaFiscal = notaFiscal;
+    public ItemNF(int nrNotaFiscal, Produto produto, double vlUnitItem, double vlDesconto, double vlSubTotal, int qtProduto) {
+        this.nrNotaFiscal = nrNotaFiscal;
         this.produto = produto;
         this.vlUnitItem = vlUnitItem;
         this.vlDesconto = vlDesconto;
@@ -25,12 +23,12 @@ public class ItemNF {
         this.qtProduto = qtProduto;
     }
 
-    public NotaFiscal getNotaFiscal() {
-        return notaFiscal;
+    public int getNrNotaFiscal() {
+        return nrNotaFiscal;
     }
 
-    public void setNotaFiscal(NotaFiscal notaFiscal) {
-        this.notaFiscal = notaFiscal;
+    public void setNrNotaFiscal(int nrNotaFiscal) {
+        this.nrNotaFiscal = nrNotaFiscal;
     }
 
     public Produto getProduto() {
@@ -73,19 +71,10 @@ public class ItemNF {
         this.qtProduto = qtProduto;
     }
 
-    public int getNrItemNotaFiscal() {
-        return nrItemNotaFiscal;
-    }
-
-    public void setNrItemNotaFiscal(int nrItemNotaFiscal) {
-        this.nrItemNotaFiscal = nrItemNotaFiscal;
-    }
-
     @Override
     public String toString() {
         return "ItemNF{" +
-                "nrItemNotaFiscal=" + nrItemNotaFiscal +
-                ", notaFiscal=" + notaFiscal +
+                "nrNotaFiscal=" + nrNotaFiscal +
                 ", produto=" + produto +
                 ", vlUnitItem=" + vlUnitItem +
                 ", vlDesconto=" + vlDesconto +

@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.enums.FormaPagamentoEnum;
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Cliente;
+import br.unipar.swiftsales.model.ItemNF;
 import br.unipar.swiftsales.model.NotaFiscal;
+import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.model.Vendedor;
 
-public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
+public class NotaFiscalDAO {
 
     //Variavel para abrir a conexão com BD
     private SQLiteOpenHelper openHelper;
@@ -28,7 +30,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
     private String nomeTabela = "NOTAFISCAL";
 
     //Nome das colunas da tabela
-    private String[]colunas = {"NR_NOTAFISCAL", "VL_NOTAFISCAL","DT_EMISSAO", "NR_CHAVEACESSO", "CD_VENDEDOR", "CD_CLIENTE", "CD_FORMAPAGAMENTO"};
+    private String[]colunas = {"NR_NOTAFISCAL", "VL_NOTAFISCAL","DT_EMISSAO", "NR_CHAVEACESSO", "CD_VENDEDOR", "CD_CLIENTE", "CD_FORMAPAGAMENTO", "NR_CAIXA"};
 
     private Context context;
 
@@ -49,7 +51,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
             return instancia;
         }
     }
-    @Override
+
     public long insert(NotaFiscal obj) {
         try {
             ContentValues valores = new ContentValues();
@@ -60,6 +62,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
             valores.put(colunas[4], obj.getVendedor().getCdVendedor());
             valores.put(colunas[5], obj.getCliente().getCdCliente());
             valores.put(colunas[6], obj.getFormaPagamento().ordinal());
+            valores.put(colunas[7], obj.getNrCaixa());
 
 
             return db.insert(nomeTabela, null, valores);
@@ -69,7 +72,6 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
         return 0;
     }
 
-    @Override
     public long update(NotaFiscal obj) {
         try {
             ContentValues valores = new ContentValues();
@@ -80,6 +82,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
             valores.put(colunas[4], obj.getVendedor().getCdVendedor());
             valores.put(colunas[5], obj.getCliente().getCdCliente());
             valores.put(colunas[6], obj.getFormaPagamento().ordinal());
+            valores.put(colunas[7], obj.getNrCaixa());
 
             String[] identificador = {String.valueOf(obj.getNrNotaFiscal())};
 
@@ -89,7 +92,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
         }
         return 0;
     }
-    @Override
+
     public long delete(NotaFiscal obj) {
         try {
             String[] identificador = {String.valueOf(obj.getNrNotaFiscal())};
@@ -99,40 +102,35 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
         }
         return 0;
     }
-    @Override
-    public ArrayList<NotaFiscal> getAll() {
-        ArrayList<NotaFiscal> lista = new ArrayList<>();
+
+    public ArrayList<ItemNF> getAllItensNota(NotaFiscal obj) { //Retorna todos os itens dentro dessa nota fiscal
+        ArrayList<ItemNF> lista = new ArrayList<>();
         try {
-            //Executa a consulta
-            Cursor cursor = db.query(nomeTabela, colunas, null, null, null, null, colunas[0]);
+            //Executa a consulta no banco de dados procurando todas os itens da nota fiscal usando o código da nota fiscal
+            String[] identificador = {String.valueOf(obj.getNrNotaFiscal())};
+            String[] colunasQuerry = {"NR_NOTAFISCAL", "CD_PRODUTO", "VL_UNITITEM", "VL_DESCONTO", "VL_SUBTOTAL", "QT_PRODUTO"};
+
+            Cursor cursor = db.query("ITEMNF", colunasQuerry, colunas[0] + " = ?", identificador, null, null, null);
+
+
             //Percorre o cursor
             if (cursor.moveToFirst()) {
                 do {
-                    NotaFiscal notaFiscal = new NotaFiscal();
+                    ItemNF itemNF = new ItemNF();
+                    itemNF.setNrNotaFiscal(cursor.getInt(0));
 
-                    notaFiscal.setNrNotaFiscal(cursor.getInt(0));
-                    notaFiscal.setVlNotaFiscal(cursor.getDouble(1));
-                    notaFiscal.setDtEmissao(cursor.getString(2));
-                    notaFiscal.setNrChaveAcesso(cursor.getString(3));
+                    // Procurando e setando o produto pelo código no banco de dados
+                    int codProduto = cursor.getInt(1);
+                    Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
+                    itemNF.setProduto(produto);
 
-                    // Procurando e setando o vendedor pelo código no banco de dados
-                    int codVendedor = cursor.getInt(4);
-                    Vendedor vendedor = VendedorDAO.getInstancia(context).getById(codVendedor);
-                    notaFiscal.setVendedor(vendedor);
-
-                    // Procurando e setando o cliente pelo código no banco de dados
-                    int codCliente = cursor.getInt(5);
-                    Cliente cliente = ClienteDAO.getInstancia(context).getById(codCliente);
-                    notaFiscal.setCliente(cliente);
-
-                    // Atrelando o código do banco de dados com o enum de forma de pagamento
-                    notaFiscal.setFormaPagamento(FormaPagamentoEnum.values()[
-                            Integer.parseInt(
-                                    cursor.getString(6))
-                            ]);
+                    itemNF.setVlUnitItem(cursor.getDouble(2));
+                    itemNF.setVlDesconto(cursor.getDouble(3));
+                    itemNF.setVlSubTotal(cursor.getDouble(4));
+                    itemNF.setQtProduto(cursor.getInt(5));
 
 
-                    lista.add(notaFiscal);
+                    lista.add(itemNF);
                 } while (cursor.moveToNext());
             }
             return lista;
@@ -141,7 +139,7 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
         }
         return lista;
     }
-    @Override
+
     public NotaFiscal getById(int id) {
         NotaFiscal notaFiscal = new NotaFiscal();
         try {
@@ -169,6 +167,9 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
                         Integer.parseInt(
                                 cursor.getString(6))
                         ]);
+
+                notaFiscal.setNrCaixa(cursor.getInt(7)
+                );
             }
             return notaFiscal;
         } catch (SQLException ex) {
@@ -218,6 +219,8 @@ public class NotaFiscalDAO implements GenericDAO<NotaFiscal>{
                             Integer.parseInt(
                                     cursor.getString(6))
                             ]);
+
+                    notaFiscal.setNrCaixa(cursor.getInt(7));
 
 
                     lista.add(notaFiscal);

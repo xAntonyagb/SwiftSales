@@ -42,7 +42,6 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
         holder.tvVlInicial.setText(String.valueOf(caixa.getVlInicial()));
         holder.tvVlFinal.setText(String.valueOf(caixa.getVlFinal()));
         holder.tvData.setText(String.format(caixa.getDtCaixa(), "dd/MM/yyyy"));
-        holder.tvVendedor.setText(caixa.getVendedor().getNmVendedor());
     }
 
 
@@ -58,7 +57,6 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
         private TextView tvVlFinal;
         private TextView tvData;
         private TextView tvCodigo;
-        private TextView tvVendedor;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +65,6 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
             tvVlFinal = itemView.findViewById(R.id.tvVlFinal);
             tvData = itemView.findViewById(R.id.tvData);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
-            tvVendedor = itemView.findViewById(R.id.tvVendedor);
 
         }
     }

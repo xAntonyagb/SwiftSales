@@ -2,24 +2,26 @@ package br.unipar.swiftsales.model;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import br.unipar.swiftsales.enums.StatusCaixaEnum;
 
 public class Caixa {
     private int nrCaixa;
+
+    private ArrayList<NotaFiscal> listaNotas;
     private double vlInicial;
     private double vlFinal;
     private String dtCaixa;
     private StatusCaixaEnum stCaixa;
-    private Vendedor vendedor;
 
-    public Caixa(int nrCaixa, double vlInicial, double vlFinal, String dtCaixa, StatusCaixaEnum stCaixa, Vendedor vendedor) {
+    public Caixa(int nrCaixa, ArrayList<NotaFiscal> listaNotas, double vlInicial, double vlFinal, String dtCaixa, StatusCaixaEnum stCaixa) {
         this.nrCaixa = nrCaixa;
+        this.listaNotas = listaNotas;
         this.vlInicial = vlInicial;
         this.vlFinal = vlFinal;
         this.dtCaixa = dtCaixa;
         this.stCaixa = stCaixa;
-        this.vendedor = vendedor;
     }
 
     public Caixa() {
@@ -65,23 +67,23 @@ public class Caixa {
         this.stCaixa = stCaixa;
     }
 
-    public Vendedor getVendedor() {
-        return vendedor;
+    public ArrayList<NotaFiscal> getListaNotas() {
+        return listaNotas;
     }
 
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
+    public void setListaNotas(ArrayList<NotaFiscal> listaNotas) {
+        this.listaNotas = listaNotas;
     }
 
     @Override
     public String toString() {
         return "Caixa{" +
                 "nrCaixa=" + nrCaixa +
+                ", listaNotas=" + listaNotas +
                 ", vlInicial=" + vlInicial +
                 ", vlFinal=" + vlFinal +
                 ", dtCaixa='" + dtCaixa + '\'' +
                 ", stCaixa=" + stCaixa.descricao +
-                ", vendedor=" + vendedor +
                 '}';
     }
 }

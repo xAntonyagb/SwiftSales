@@ -2,11 +2,14 @@ package br.unipar.swiftsales.model;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import br.unipar.swiftsales.enums.FormaPagamentoEnum;
 
 public class NotaFiscal {
     private int nrNotaFiscal;
+    private ArrayList<ItemNF> listaItens;
+    private int nrCaixa;
     private double vlNotaFiscal;
     private String dtEmissao;
     private String nrChaveAcesso;
@@ -14,8 +17,10 @@ public class NotaFiscal {
     private Cliente cliente;
     private FormaPagamentoEnum formaPagamento;
 
-    public NotaFiscal(int nrNotaFiscal, double vlNotaFiscal, String dtEmissao, String nrChaveAcesso, Vendedor vendedor, Cliente cliente, FormaPagamentoEnum formaPagamento) {
+    public NotaFiscal(int nrNotaFiscal, ArrayList<ItemNF> listaItens, int nrCaixa, double vlNotaFiscal, String dtEmissao, String nrChaveAcesso, Vendedor vendedor, Cliente cliente, FormaPagamentoEnum formaPagamento) {
         this.nrNotaFiscal = nrNotaFiscal;
+        this.listaItens = listaItens;
+        this.nrCaixa = nrCaixa;
         this.vlNotaFiscal = vlNotaFiscal;
         this.dtEmissao = dtEmissao;
         this.nrChaveAcesso = nrChaveAcesso;
@@ -83,6 +88,21 @@ public class NotaFiscal {
         this.formaPagamento = formaPagamento;
     }
 
+    public ArrayList<ItemNF> getListaItens() {
+        return listaItens;
+    }
+
+    public void setListaItens(ArrayList<ItemNF> listaItens) {
+        this.listaItens = listaItens;
+    }
+
+    public int getNrCaixa() {
+        return nrCaixa;
+    }
+
+    public void setNrCaixa(int nrCaixa) {
+        this.nrCaixa = nrCaixa;
+    }
 
     @Override
     public String toString() {
@@ -94,6 +114,8 @@ public class NotaFiscal {
                 ", vendedor=" + vendedor.getNmVendedor() +
                 ", cliente=" + cliente.getNmCliente() +
                 ", formaPagamento=" + formaPagamento.descricao +
+                ", nrCaixa=" + nrCaixa +
+                ", listaItens=" + listaItens.toString() +
                 '}';
     }
 }

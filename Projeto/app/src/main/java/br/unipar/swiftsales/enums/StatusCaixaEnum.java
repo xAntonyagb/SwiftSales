@@ -1,8 +1,8 @@
 package br.unipar.swiftsales.enums;
 
 public enum StatusCaixaEnum {
-    ABERTO("Aberto"),
-    FECHADO("Fechado");
+    ABERTO("A"),
+    FECHADO("F");
 
     public final String descricao;
 
