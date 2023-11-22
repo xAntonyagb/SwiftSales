@@ -14,6 +14,8 @@ import br.unipar.swiftsales.R;
 
 public class CaixaActivity extends AppCompatActivity {
     private EditText edCaixaFechado;
+    private EditText edCaixaAberto;
+    private EditText edSaldo;
     private Button btFecharCaixa;
     private Button btAbrirCaixa;
     private ImageView ivVoltar;
@@ -28,6 +30,8 @@ public class CaixaActivity extends AppCompatActivity {
         ivVoltar.setOnClickListener(view -> finish());
 
         edCaixaFechado = findViewById(R.id.edCaixaFechado);
+        edCaixaAberto = findViewById(R.id.edCaixaAberto);
+        edSaldo = findViewById(R.id.edSaldo);
         btFecharCaixa = findViewById(R.id.btFecharCaixa);
         btAbrirCaixa = findViewById(R.id.btAbrirCaixa);
 
