@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CAIXAS"
+                android:text="CAIXA"
                 android:fontFamily="@font/gugi"
                 android:textColor="#FFFFFF"
                 android:textSize="26sp"
@@ -144,7 +144,7 @@
         android:orientation="vertical"
         android:layout_below="@+id/lnCaixasAbertos2"
         android:id="@+id/lnAbrirCaixa"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -176,15 +176,15 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/ibRelatorio"
+        android:id="@+id/ibRelatorios"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_below="@+id/lnAbrirCaixa"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="323dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_button"
+        android:onClick="abrirRelatorios"
+        android:src="@drawable/img_relatorios" />
 
-        android:layout_marginBottom="44dp"
-        android:src="@drawable/img_btcaixa_relatorio" />
 </RelativeLayout>

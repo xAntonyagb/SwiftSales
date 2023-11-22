@@ -13,6 +13,12 @@
         android:theme="@style/Theme.SwiftSales"
         tools:targetApi="31">
         <activity
+            android:name=".view.RelatorioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.CaixaActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ConfiguracoesActivity"
             android:exported="false" />
         <activity

@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import br.unipar.swiftsales.enums.FormaPagamentoEnum;
+import br.unipar.swiftsales.enums.StatusCaixaEnum;
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Caixa;
 
@@ -68,8 +70,7 @@ public class RelatorioDAO  {
                     caixa.setVlInicial(cursor.getDouble(1));
                     caixa.setVlFinal(cursor.getDouble(2));
                     caixa.setDtCaixa(cursor.getString(3));
-                    caixa.setStCaixa(cursor.getString(4));
-                    caixa.setVendedor(VendedorDAO.getInstancia(context).getById(cursor.getInt(5)));
+                    caixa.setStCaixa(StatusCaixaEnum.values()[Integer.parseInt(cursor.getString(4))]); // Atrelando o enum ao valor do banco (0 = Aberto, 1 = Fechado)
                     listaCaixa.add(caixa);
                 } while (cursor.moveToNext());
             }

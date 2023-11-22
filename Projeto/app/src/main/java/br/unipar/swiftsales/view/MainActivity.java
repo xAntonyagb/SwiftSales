@@ -1,6 +1,7 @@
 package br.unipar.swiftsales.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void abrirCadastroCliente(View view) {
         Intent intent = new Intent(MainActivity.this,
                 ClienteActivity.class);
@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     public void abrirCadastroProduto(View view) {
         Intent intent = new Intent(MainActivity.this,
                 ProdutoActivity.class);
+        startActivity(intent);
+    }
+
+    public void abrirCaixa(View view) {
+        Intent intent = new Intent(MainActivity.this,
+                CaixaActivity.class);
         startActivity(intent);
     }
 
