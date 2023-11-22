@@ -6,5 +6,6 @@
     <color name="red">#E12E2E</color>
     <color name="yellow">#E08B0F</color>
     <color name="swiftSales_red">#BB243E</color>
-
+    <color name="swiftSales_background_button_gray">#2E2E2E</color>
+    <color name="swiftSales_background_button_blue">#2B62B5</color>
 </resources>
