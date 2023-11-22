@@ -15,14 +15,15 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.model.Caixa;
 import br.unipar.swiftsales.model.Cliente;
+import br.unipar.swiftsales.model.RelatorioCaixa;
 import br.unipar.swiftsales.view.ClienteActivity;
 
 public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdapter.ClienteViewHolder> {
-    ArrayList<Caixa> listaCaixa;
+    ArrayList<RelatorioCaixa> listaRelatorioCaixa;
     private Context context;
 
-    public RelatorioListAdapter(ArrayList<Caixa> listaCaixa, Context context){
-        this.listaCaixa = listaCaixa;
+    public RelatorioListAdapter(ArrayList<RelatorioCaixa> listaRelatorioCaixa, Context context){
+        this.listaRelatorioCaixa = listaRelatorioCaixa;
         this.context = context;
     }
 
@@ -36,36 +37,33 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
 
     @Override
     public void onBindViewHolder(@NonNull RelatorioListAdapter.ClienteViewHolder holder, int position) {
-        Caixa caixa = listaCaixa.get(position);
-        holder.tvCodigo.setText(caixa.getNrCaixa());
-        holder.tvStatus.setText(caixa.getStCaixa().descricao);
-        holder.tvVlInicial.setText(String.valueOf(caixa.getVlInicial()));
-        holder.tvVlFinal.setText(String.valueOf(caixa.getVlFinal()));
-        holder.tvData.setText(String.format(caixa.getDtCaixa(), "dd/MM/yyyy"));
+        RelatorioCaixa relatorioCaixa = listaRelatorioCaixa.get(position);
+        holder.tvStatus.setText(relatorioCaixa.getCaixa().getStCaixa().descricao.replace("A", "Aberto").replace("F", "Fechado"));
+
+
     }
 
 
 
     @Override
     public int getItemCount() {
-        return listaCaixa.size();
+        return listaRelatorioCaixa.size();
     }
 
     public class ClienteViewHolder extends RecyclerView.ViewHolder {
         private TextView tvStatus;
-        private TextView tvVlInicial;
-        private TextView tvVlFinal;
         private TextView tvData;
         private TextView tvCodigo;
+        private TextView tvQuantidadeVendas;
+        private TextView tvValorTotalVendas;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
             tvStatus = itemView.findViewById(R.id.tvStatus);
-            tvVlInicial = itemView.findViewById(R.id.tvVlInicial);
-            tvVlFinal = itemView.findViewById(R.id.tvVlFinal);
             tvData = itemView.findViewById(R.id.tvData);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
-
+            tvQuantidadeVendas = itemView.findViewById(R.id.tvQuantidadeVendas);
+            tvValorTotalVendas = itemView.findViewById(R.id.tvValorTotalVendas);
         }
     }
 }
