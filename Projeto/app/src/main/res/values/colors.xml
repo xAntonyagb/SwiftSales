@@ -8,4 +8,10 @@
     <color name="swiftSales_red">#BB243E</color>
     <color name="swiftSales_background_button_gray">#2E2E2E</color>
     <color name="swiftSales_background_button_blue">#2B62B5</color>
+    <color name="swiftSales_CinzaBts">#D0D0D0</color>
+    <color name="swiftSales_Cinza">#707070</color>
+    <color name="swiftSales_AzulBt">#2B62B5</color>
+    <color name="swiftSales_Azul">#162754</color>
+    <color name="swiftSales_Verde">#1CA73B</color>
+    <color name="swiftSales_VerdeForte">#003A0D</color>
 </resources>

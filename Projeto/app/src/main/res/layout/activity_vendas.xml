@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.VendasActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/alToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/swiftSales_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VENDAS"
+                android:fontFamily="@font/gugi"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar"
+                app:layout_constraintStart_toStartOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                android:id="@+id/tvToolbarTitulo"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_backarrow"
+                android:rotation="90"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ivVoltar"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/alToolbar"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/lnIdenfVenda"
+        android:background="@color/swiftSales_CinzaBts">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_venda"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alToolbar"
+            android:text="VENDA Nº"
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tvNumeroVenda"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/lnIdenfVenda"
+        android:id="@+id/lnItensNota"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="35dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/jaldi"
+                android:text="Cód."/>
+
+
+            <TextView
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/jaldi"
+                android:text="Produto"/>
+
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/jaldi"
+                android:text="Qtd"/>
+
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/jaldi"
+                android:text="Valor Unit."/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/swiftSales_background_button_gray">
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:background="@drawable/backgound_vendas"
+            android:id="@+id/rvItensNota"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/lnInformacoesVenda"
+        android:layout_below="@+id/lnItensNota"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/swiftSales_background_button_gray">
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL:"
+                android:textColor="@color/swiftSales_VerdeForte"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$"
+                android:textColor="@color/swiftSales_VerdeForte"
+                android:textStyle="bold"
+                android:layout_marginRight="5dp"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvVlTotalVenda"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tvVlTotalVenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0,00"
+                android:textColor="@color/swiftSales_VerdeForte"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DESC. APLICADO:"
+                android:textColor="@color/swiftSales_Azul"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$"
+                android:textColor="@color/swiftSales_Azul"
+                android:textStyle="bold"
+                android:layout_marginRight="5dp"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvVlDescontoTotal"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0,00"
+                android:textColor="@color/swiftSales_Azul"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="15sp"
+                android:id="@+id/tvVlDescontoTotal"
+                tools:ignore="MissingConstraints"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/lnInformacoesVenda"
+        android:id="@+id/lnBotoesVenda"
+        android:paddingHorizontal="20dp">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/swiftSales_Verde"
+            android:id="@+id/btFinalizarVenda"
+            android:layout_weight="5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_confirmar_compra"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FINALIZAR VENDA"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#003A0D"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="6"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btAddProduto"
+            android:backgroundTint="@color/swiftSales_AzulBt">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_add_produto"
+                    android:layout_marginRight="2dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADICIONAR PRODUTO"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#0C1E3A"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnBotoesVenda"
+        android:layout_marginTop="75dp"
+        android:fontFamily="@font/gugi"
+        android:gravity="center"
+        android:text="© 2023 - 2023 Todos os direitos reservados. SwiftSales"
+        android:textColor="@color/swiftSales_Cinza"
+        android:textSize="10sp" />
+
+
+</RelativeLayout>
