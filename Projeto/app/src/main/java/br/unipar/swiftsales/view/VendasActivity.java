@@ -1,4 +1,4 @@
-package br.unipar.swiftsales.model;
+package br.unipar.swiftsales.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
