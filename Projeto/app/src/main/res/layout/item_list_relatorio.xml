@@ -86,7 +86,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:layout_weight="3"
-                    android:text="Valor Total" />
+                    android:text="Valor Saldo" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -110,7 +110,7 @@
                     android:layout_weight="2" />
 
                 <TextView
-                    android:id="@+id/tvValorTotalVendas"
+                    android:id="@+id/tvVlSaldo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"

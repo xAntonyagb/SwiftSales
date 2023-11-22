@@ -2,13 +2,13 @@ package br.unipar.swiftsales.model;
 
 public class RelatorioCaixa {
     private Caixa caixa;
-    private double vlTotalVendas;
+    private double vlSaldo;
     private int qtVendas;
     private String data;
 
-    public RelatorioCaixa(Caixa caixa, double vlTotalVendas, int qtVendas, String data) {
+    public RelatorioCaixa(Caixa caixa, double vlSaldo, int qtVendas, String data) {
         this.caixa = caixa;
-        this.vlTotalVendas = vlTotalVendas;
+        this.vlSaldo = vlSaldo;
         this.qtVendas = qtVendas;
         this.data = data;
     }
@@ -24,12 +24,12 @@ public class RelatorioCaixa {
         this.caixa = caixa;
     }
 
-    public double getVlTotalVendas() {
-        return vlTotalVendas;
+    public double getVlSaldo() {
+        return vlSaldo;
     }
 
-    public void setVlTotalVendas(double vlTotalVendas) {
-        this.vlTotalVendas = vlTotalVendas;
+    public void setVlSaldo(double vlSaldo) {
+        this.vlSaldo = vlSaldo;
     }
 
     public int getQtVendas() {
@@ -52,7 +52,7 @@ public class RelatorioCaixa {
     public String toString() {
         return "RelatorioCaixa{" +
                 "caixa=" + caixa +
-                ", vlTotalVendas=" + vlTotalVendas +
+                ", vlSaldo=" + vlSaldo +
                 ", qtVendas=" + qtVendas +
                 ", data='" + data + '\'' +
                 '}';
