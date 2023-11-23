@@ -190,6 +190,18 @@ public class NotaFiscalDAO {
         return 0;
     }
 
+    public int getUltimoCodigo(){
+        try {
+            Cursor cursor = db.rawQuery("SELECT MAX(" + colunas[0] + ") FROM "+ nomeTabela, null);
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        }catch (SQLException ex){
+            Log.e("ERRO","NotaFiscalDAO.getProximoCodigo():" +ex.getMessage());
+        }
+        return 0;
+    }
+
     public ArrayList<NotaFiscal> getByListNome(String nrNotaFiscal){
         ArrayList<NotaFiscal> lista = new ArrayList<>();
         nrNotaFiscal += "%";
