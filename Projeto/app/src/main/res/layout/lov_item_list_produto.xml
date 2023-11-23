@@ -133,6 +133,7 @@
                     android:enabled="false"
                     android:id="@+id/edQuantidade"
                     android:clickable="false"
+                    android:text="1"
                     android:backgroundTint="@color/gray"/>
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -145,15 +146,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="right"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_plus"
+                        android:layout_marginRight="5dp"
+                        android:backgroundTint="@color/swiftSales_red"
                         android:elevation="5dp"
-                        android:id="@+id/btAddItemNf"
-                        android:backgroundTint="@android:color/holo_green_dark"/>
+                        android:src="@drawable/ic_plus"
+                        android:id="@+id/btAddItemNf"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

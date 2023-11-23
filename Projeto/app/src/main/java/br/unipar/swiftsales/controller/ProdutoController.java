@@ -6,15 +6,24 @@ import java.util.ArrayList;
 
 import br.unipar.swiftsales.dao.ProdutoDAO;
 import br.unipar.swiftsales.model.Produto;
+import br.unipar.swiftsales.view.ProdutoActivity;
 
 public class ProdutoController {
     public Context context;
+
+    public static ProdutoController instancia;
+    public static ProdutoController getInstancia(){
+        return instancia;
+    }
     public ProdutoController(Context context){
         this.context = context;
+        instancia = this;
     }
+
     public String retornaProximoCodigo(){
         return String.valueOf(ProdutoDAO.getInstancia(context).getProximoCodigo());
     }
+
     public String salvarProduto(String cdProduto, String dsProduto, String vlProduto, String qtProduto){
         try{
             //Validar os campos
