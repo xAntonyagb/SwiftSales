@@ -26,10 +26,6 @@ public class ItemNFController {
         instancia = this;
     }
 
-    public String retornaProximoCodigo(){
-        return String.valueOf(ProdutoDAO.getInstancia(context).getProximoCodigo());
-    }
-
     public String salvarItemNF(ItemNF obj){
         try{
             //Validar os campos
@@ -125,6 +121,10 @@ public class ItemNFController {
             return "Erro ao excluir Produto.";
         }
         return null;
+    }
+
+    public ItemNF getById(int nrNotaFiscal, int cdProduto){
+        return ItemNFDAO.getInstancia(context).getById(nrNotaFiscal, cdProduto);
     }
 
 }

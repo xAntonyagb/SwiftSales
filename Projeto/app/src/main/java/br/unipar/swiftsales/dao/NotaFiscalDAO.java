@@ -93,9 +93,9 @@ public class NotaFiscalDAO {
         return 0;
     }
 
-    public long delete(NotaFiscal obj) {
+    public long delete(int nrNotaFiscal) {
         try {
-            String[] identificador = {String.valueOf(obj.getNrNotaFiscal())};
+            String[] identificador = {String.valueOf(nrNotaFiscal)};
             return db.delete(nomeTabela, colunas[0] + " = ?", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","NotaFiscalDAO.delete():" +ex.getMessage());
@@ -103,11 +103,11 @@ public class NotaFiscalDAO {
         return 0;
     }
 
-    public ArrayList<ItemNF> getAllItensNota(NotaFiscal obj) { //Retorna todos os itens dentro dessa nota fiscal
+    public ArrayList<ItemNF> getAllItensNota(int nrNotaFiscal) { //Retorna todos os itens dentro dessa nota fiscal
         ArrayList<ItemNF> lista = new ArrayList<>();
         try {
             //Executa a consulta no banco de dados procurando todas os itens da nota fiscal usando o código da nota fiscal
-            String[] identificador = {String.valueOf(obj.getNrNotaFiscal())};
+            String[] identificador = {String.valueOf(nrNotaFiscal)};
             String[] colunasQuerry = {"NR_NOTAFISCAL", "CD_PRODUTO", "VL_UNITITEM", "VL_DESCONTO", "VL_SUBTOTAL", "QT_PRODUTO"};
 
             Cursor cursor = db.query("ITEMNF", colunasQuerry, colunas[0] + " = ?", identificador, null, null, null);
