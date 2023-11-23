@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.adapter.ProdutoListAdapter;
+import br.unipar.swiftsales.adapter.ProdutoListItemNfAdapter;
 import br.unipar.swiftsales.adapter.ProdutoLovListAdapter;
 import br.unipar.swiftsales.controller.ItemNFController;
 import br.unipar.swiftsales.controller.NotaFiscalController;
@@ -136,11 +137,26 @@ public class VendasActivity extends AppCompatActivity {
         ArrayList<ItemNF> listaItemNf = new ArrayList<>();
         listaItemNf = ItemNFController.getInstancia(this).getAllItensNota(NotaFiscalController.getInstancia(this).retornaUltimoCodigo());
         //Adapter dos itens da lista
-        /*
         ProdutoListItemNfAdapter adapter = new ProdutoListItemNfAdapter(listaItemNf, this);
         rvItensNota.setLayoutManager(new LinearLayoutManager(this));
         rvItensNota.setAdapter(adapter);
-        */
+    }
+
+    public void excluirItemNF(ItemNF itemNF){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Excluir Item");
+        builder.setMessage("Deseja excluir o item selecionado?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ItemNFController.getInstancia(VendasActivity.this).excluirItemNF(itemNF.getNrNotaFiscal(), itemNF.getProduto().getCdProduto());
+                carregaListaProdutosVenda();
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Não", null);
+        builder.show();
     }
 
 
