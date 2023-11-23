@@ -58,6 +58,7 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                     quantidade = produto.getQtProduto();
                 }
                 holder.edQuantidade.setText(String.valueOf(quantidade));
+                holder.tvValorTotal.setText(String.valueOf(produto.getVlProduto() * quantidade));
             }
         });
         holder.btSubtract.setOnClickListener(new View.OnClickListener() {

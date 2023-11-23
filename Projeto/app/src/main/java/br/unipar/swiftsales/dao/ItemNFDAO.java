@@ -89,9 +89,9 @@ public class ItemNFDAO {
         return 0;
     }
 
-    public long delete(ItemNF obj) {
+    public long delete(int nrNotaFiscal, int cdProduto) {
         try {
-            String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
+            String[] identificador = {String.valueOf(nrNotaFiscal), String.valueOf(cdProduto)};
             return db.delete(nomeTabela, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.delete():" +ex.getMessage());
@@ -100,10 +100,10 @@ public class ItemNFDAO {
     }
 
 
-    public ItemNF getById(ItemNF obj) {
+    public ItemNF getById(int nrNotaFiscal, int cdProduto) {
         ItemNF itemNF = new ItemNF();
         try {
-            String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
+            String[] identificador = {String.valueOf(nrNotaFiscal), String.valueOf(cdProduto)};
             Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador, null, null, null);
             if (cursor.moveToFirst()) {
 
