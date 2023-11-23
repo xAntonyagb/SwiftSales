@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,7 +22,11 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.adapter.ProdutoListAdapter;
 import br.unipar.swiftsales.adapter.ProdutoLovListAdapter;
+import br.unipar.swiftsales.controller.ItemNFController;
+import br.unipar.swiftsales.controller.NotaFiscalController;
 import br.unipar.swiftsales.controller.ProdutoController;
+import br.unipar.swiftsales.dao.ClienteDAO;
+import br.unipar.swiftsales.model.ItemNF;
 import br.unipar.swiftsales.model.Produto;
 
 public class VendasActivity extends AppCompatActivity {
@@ -40,6 +45,13 @@ public class VendasActivity extends AppCompatActivity {
     private RecyclerView rvProdutos;
     private AlertDialog produtoDialog;
 
+    public static VendasActivity instancia;
+    public VendasActivity(){
+        instancia = this;
+    }
+    public static VendasActivity getInstancia(){
+        return instancia;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +128,19 @@ public class VendasActivity extends AppCompatActivity {
         ProdutoLovListAdapter adapter = new ProdutoLovListAdapter(listaProdutos, this);
         rvProdutos.setLayoutManager(new LinearLayoutManager(this));
         rvProdutos.setAdapter(adapter);
+    }
+    public void carregaListaProdutosVenda(){
+        if (produtoDialog != null || produtoDialog.isShowing()){
+            produtoDialog.dismiss();
+        }
+        ArrayList<ItemNF> listaItemNf = new ArrayList<>();
+        listaItemNf = ItemNFController.getInstancia(this).getAllItensNota(NotaFiscalController.getInstancia(this).retornaUltimoCodigo());
+        //Adapter dos itens da lista
+        /*
+        ProdutoListItemNfAdapter adapter = new ProdutoListItemNfAdapter(listaItemNf, this);
+        rvItensNota.setLayoutManager(new LinearLayoutManager(this));
+        rvItensNota.setAdapter(adapter);
+        */
     }
 
 
