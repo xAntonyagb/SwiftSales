@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
@@ -125,37 +125,16 @@
                     android:paddingRight="2dp"
                     android:layout_weight="1" />
             </LinearLayout>
-            <LinearLayout
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="end">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/BotaoDecremento"
-                    android:id="@+id/btSubtract"/>
-                <EditText
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:enabled="false"
-                    android:clickable="false"
-                    android:backgroundTint="@color/gray"/>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/BotaoIncremento"
-                    android:id="@+id/btAdd"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_plus"
-                    android:elevation="5dp"
-                    android:id="@+id/btDelete"
-                    android:backgroundTint="@android:color/holo_green_dark"/>
-            </LinearLayout>
+                style="@style/BotaoIncremento"
+                android:layout_gravity="end"
+                android:id="@+id/btAdd"
+                android:backgroundTint="@color/swiftSales_red"
+                android:layout_margin="5dp"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
