@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.adapter.ProdutoListAdapter;
+import br.unipar.swiftsales.adapter.ProdutoLovListAdapter;
 import br.unipar.swiftsales.controller.ProdutoController;
 import br.unipar.swiftsales.model.Produto;
 
@@ -108,9 +109,9 @@ public class VendasActivity extends AppCompatActivity {
     public void carregarListaProdutos(String dsProduto){
         ArrayList<Produto> listaProdutos = new ArrayList<>();
         if (dsProduto.equals("")){
-            listaProdutos = ProdutoController.getInstancia().retornaListaProdutos();
+            listaProdutos = ProdutoController.getInstancia(this).retornaListaProdutos();
         }else {
-            listaProdutos = ProdutoController.getInstancia().getByListNome(dsProduto);
+            listaProdutos = ProdutoController.getInstancia(this).getByListNome(dsProduto);
         }
         ProdutoLovListAdapter adapter = new ProdutoLovListAdapter(listaProdutos, this);
         rvProdutos.setLayoutManager(new LinearLayoutManager(this));

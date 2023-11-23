@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import br.unipar.swiftsales.dao.ClienteDAO;
 import br.unipar.swiftsales.dao.ProdutoDAO;
 import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.view.ProdutoActivity;
@@ -12,8 +13,12 @@ public class ProdutoController {
     public Context context;
 
     public static ProdutoController instancia;
-    public static ProdutoController getInstancia(){
-        return instancia;
+    public static ProdutoController getInstancia(Context context){
+        if (instancia == null) {
+            return instancia = new ProdutoController(context);
+        } else {
+            return instancia;
+        }
     }
     public ProdutoController(Context context){
         this.context = context;
