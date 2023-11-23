@@ -126,5 +126,8 @@ public class ItemNFController {
     public ItemNF getById(int nrNotaFiscal, int cdProduto){
         return ItemNFDAO.getInstancia(context).getById(nrNotaFiscal, cdProduto);
     }
+    public ArrayList<ItemNF> getAllItensNota(int nrNotaFiscal){
+        return ItemNFDAO.getInstancia(context).getAllItensNota(nrNotaFiscal);
+    }
 
 }

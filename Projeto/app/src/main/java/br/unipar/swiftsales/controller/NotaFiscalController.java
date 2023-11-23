@@ -32,8 +32,8 @@ public class NotaFiscalController {
         return String.valueOf(NotaFiscalDAO.getInstancia(context).getProximoCodigo());
     }
 
-    public String retornaUltimoCodigo(){
-        return String.valueOf(NotaFiscalDAO.getInstancia(context).getUltimoCodigo());
+    public int retornaUltimoCodigo(){
+        return NotaFiscalDAO.getInstancia(context).getUltimoCodigo();
     }
 
     public String salvarNotaFiscal(NotaFiscal obj){

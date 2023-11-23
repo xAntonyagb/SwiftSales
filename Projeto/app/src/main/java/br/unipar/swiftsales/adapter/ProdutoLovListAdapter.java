@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
+import br.unipar.swiftsales.controller.ItemNFController;
+import br.unipar.swiftsales.controller.NotaFiscalController;
 import br.unipar.swiftsales.model.ItemNF;
 import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.view.ProdutoActivity;
+import br.unipar.swiftsales.view.VendasActivity;
 
 public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAdapter.ProdutoViewHolder> {
     ArrayList<Produto> listaProdutos;
@@ -87,9 +90,14 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                 itemNF.setQtProduto(Integer.parseInt(holder.edQuantidade.getText().toString()));
                 itemNF.setVlUnitItem(produto.getVlProduto());
                 itemNF.setVlSubTotal(itemNF.getVlUnitItem() * itemNF.getQtProduto());
+                itemNF.setNrNotaFiscal(NotaFiscalController.getInstancia(context).retornaUltimoCodigo());
+                try {
+                    ItemNFController.getInstancia(context).salvarItemNF(itemNF);
 
-
-                /*ItemNfController.getInstancia().addItemNf());*/
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //VendasActivity.getInstancia().carregaListaProdutosVenda();
 
             }
         });

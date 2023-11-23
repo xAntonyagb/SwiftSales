@@ -125,5 +125,34 @@ public class ItemNFDAO {
         }
         return null;
     }
+    public ArrayList<ItemNF> getAllItensNota(int nrNotaFiscal) { //Retorna todos os itens dentro dessa nota fiscal
+        ArrayList<ItemNF> listaItemNf = new ArrayList<>();
+        try {
+            //Executa a consulta no banco de dados procurando todas os itens da nota fiscal usando o código da nota fiscal
+            String[] identificador = {String.valueOf(nrNotaFiscal)};
+            String[] colunasQuerry = {"NR_NOTAFISCAL", "CD_PRODUTO", "VL_UNITITEM", "VL_DESCONTO", "VL_SUBTOTAL", "QT_PRODUTO"};
 
+            Cursor cursor = db.query("ITEMNF", colunasQuerry, colunas[0] + " = ?", identificador, null, null, colunas[1]);
+           if (cursor.moveToFirst()) {
+               do {
+                   ItemNF itemNF = new ItemNF();
+                   itemNF.setNrNotaFiscal(cursor.getInt(0));
+
+                   // Procurando e setando o produto pelo código no banco de dados
+                   int codProduto = cursor.getInt(1);
+                   Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
+                   itemNF.setProduto(produto);
+
+                   itemNF.setVlUnitItem(cursor.getDouble(2));
+                   itemNF.setVlDesconto(cursor.getDouble(3));
+                   itemNF.setVlSubTotal(cursor.getDouble(4));
+                   itemNF.setQtProduto(cursor.getInt(5));
+                   listaItemNf.add(itemNF);
+               } while (cursor.moveToNext());
+           }
+        } catch (SQLException ex) {
+            Log.e("ERRO","ItemNFDAO.getAll():" +ex.getMessage());
+        }
+        return listaItemNf;
+    }
 }
