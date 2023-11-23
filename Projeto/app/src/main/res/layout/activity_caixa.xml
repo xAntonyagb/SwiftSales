@@ -89,7 +89,8 @@
         android:orientation="horizontal"
         android:id="@+id/lnCaixasAbertos"
         android:layout_below="@+id/lnLine"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:visibility="visible">
 
 
         <TextView
@@ -115,7 +116,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnCaixasAbertos"
         android:orientation="horizontal"
-        android:id="@+id/lnCaixasAbertos2">
+        android:id="@+id/lnCaixasAbertos2"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -159,6 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Abrir Caixa"
+            android:textColor="@color/white"
             android:fontFamily="@font/jaldi"
             android:id="@+id/btAbrirCaixa"
             android:backgroundTint="@color/swiftSales_background_button_gray"
@@ -168,6 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fechar Caixa"
+            android:textColor="@color/white"
             android:layout_marginTop="5dp"
             android:id="@+id/btFecharCaixa"
             android:fontFamily="@font/jaldi"
