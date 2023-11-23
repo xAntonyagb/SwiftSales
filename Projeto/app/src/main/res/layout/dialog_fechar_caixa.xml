@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".view.CaixaActivity">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -20,12 +23,13 @@
             android:textColor="@color/black"
             />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/edSaldoInicial"
-            android:layout_marginTop="15dp"
+            android:id="@+id/tvSaldoInicial"
+            android:text=""
+            android:layout_marginTop="20dp"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
             />
@@ -33,7 +37,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Saldo Final: R$"
             android:textSize="20dp"
             android:layout_marginTop="20dp"
@@ -41,7 +44,18 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
             />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/edSaldoFinal"
+            android:text=""
+            android:layout_marginTop="20dp"
+            android:inputType="numberDecimal"
+            android:textColor="@color/black"
+            />
     </LinearLayout>
+
     <View
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
@@ -49,7 +63,10 @@
         android:background="@android:color/darker_gray"
         android:focusable="false"
         android:layout_marginBottom="5dp"/>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +75,30 @@
         android:fontFamily="@font/jaldi"
         android:textColor="@color/black"
         android:textSize="20sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvValorTotal"
+        android:text=""
+        android:fontFamily="@font/jaldi"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        />
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fechar Caixa"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:fontFamily="@font/jaldi"
+        android:textSize="20sp"
+        android:id="@+id/btnFecharCaixa"
         />
 
 
