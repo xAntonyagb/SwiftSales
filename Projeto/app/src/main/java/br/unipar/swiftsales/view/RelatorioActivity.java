@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.R;
 import br.unipar.swiftsales.adapter.RelatorioListAdapter;
 import br.unipar.swiftsales.controller.RelatorioCaixaController;
+import br.unipar.swiftsales.model.Caixa;
 import br.unipar.swiftsales.model.RelatorioCaixa;
 
 public class RelatorioActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class RelatorioActivity extends AppCompatActivity {
 
         ivVoltar = findViewById(R.id.ivVoltar);
         ivVoltar.setOnClickListener(view -> finish());
+        Caixa caixa = (Caixa) getIntent().getSerializableExtra("caixa");
 
     }
     public void gerarRelatorio(){
