@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import br.unipar.swiftsales.R;
+import br.unipar.swiftsales.model.ItemNF;
 import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.view.ProdutoActivity;
 
@@ -56,7 +57,6 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                     holder.btAdd.setEnabled(false);
                     quantidade = produto.getQtProduto();
                 }
-
                 holder.edQuantidade.setText(String.valueOf(quantidade));
             }
         });
@@ -75,11 +75,20 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                 }
 
                 holder.edQuantidade.setText(String.valueOf(quantidade));
+                holder.tvValorTotal.setText(String.valueOf(produto.getVlProduto() * quantidade));
             }
         });
         holder.btAddItemNf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ItemNF itemNF = new ItemNF();
+                itemNF.setProduto(produto);
+                itemNF.setQtProduto(Integer.parseInt(holder.edQuantidade.getText().toString()));
+                itemNF.setVlUnitItem(produto.getVlProduto());
+                itemNF.setVlSubTotal(itemNF.getVlUnitItem() * itemNF.getQtProduto());
+
+
+                /*ItemNfController.getInstancia().addItemNf());*/
 
             }
         });
@@ -101,6 +110,7 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
         private ImageButton btAddItemNf;
         private ImageButton btSubtract;
         private ImageButton btAdd;
+        private TextView tvValorTotal;
 
         public ProdutoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +122,7 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
             btSubtract = itemView.findViewById(R.id.btSubtract);
             btAdd = itemView.findViewById(R.id.btAdd);
             edQuantidade = itemView.findViewById(R.id.edQuantidade);
+            tvValorTotal = itemView.findViewById(R.id.tvValorTotal);
         }
     }
 }
