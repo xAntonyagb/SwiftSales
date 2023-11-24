@@ -15,11 +15,6 @@ public class RelatorioCaixaController {
         this.context = context;
     }
     public ArrayList<RelatorioCaixa> getRelatorioCaixa(String dataInicial, String dataFinal) {
-        try {
-            return RelatorioCaixaDAO.getInstancia(context).getRelatorioCaixa(dataInicial, dataFinal);
-        } catch (Exception ex) {
-            Log.e("ERRO", ex.getMessage());
-        }
-        return null;
+        return RelatorioCaixaDAO.getInstancia(context).getRelatorioCaixa(dataInicial, dataFinal);
     }
 }

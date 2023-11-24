@@ -94,6 +94,13 @@ public class VendasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendas);
 
+
+
+        if(CaixaDAO.getInstancia(this).isCaixaAberto() == false){
+            Toast.makeText(this, "Abra o caixa para iniciar uma venda!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         ivVoltar = findViewById(R.id.ivVoltar);
         ivVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,25 +133,12 @@ public class VendasActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        if(CaixaDAO.getInstancia(this).isCaixaAberto() == false){
-            Toast.makeText(this, "Abra o caixa para iniciar uma venda!", Toast.LENGTH_SHORT).show();
-
-//            CaixaActivity.getInstancia().
-//            finish();
-        }
-
-
-
-        tvNumeroVenda.setText(String.valueOf(NotaFiscalController.getInstancia(this).retornaUltimoCodigo()));
-
         venda = new NotaFiscal();
         venda.setNrNotaFiscal(NotaFiscalController.getInstancia(this).retornaProximoCodigo());
         venda.setNrCaixa(1);
         venda.setDtEmissao(getDataAtual());
         NotaFiscalDAO.getInstancia(this).insertTemp(venda);
-
+        tvNumeroVenda.setText(String.valueOf(NotaFiscalController.getInstancia(this).retornaUltimoCodigo()));
     }
 
     @Override
@@ -307,7 +301,10 @@ public class VendasActivity extends AppCompatActivity {
 
                 notaFiscal.setNrChaveAcesso(chave);
                 notaFiscal.setVendedor(listaVendedores.get(posVendedor));
-                notaFiscal.setCliente(listaClientes.get(posCliente));
+                if (listaClientes.size() > 0) {
+                    notaFiscal.setCliente(listaClientes.get(posCliente));
+                }
+
                 notaFiscal.setFormaPagamento(FormaPagamentoEnum.descricaoToEnum((String) spFormaPagamento.getSelectedItem()));
 
                 NotaFiscalDAO.getInstancia(getApplicationContext()).update(notaFiscal);

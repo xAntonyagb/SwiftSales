@@ -7,11 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Caixa;
 import br.unipar.swiftsales.model.RelatorioCaixa;
+import br.unipar.swiftsales.utils.DataAtual;
 
 public class RelatorioCaixaDAO {
     //Variavel para abrir a conexão com BD
@@ -49,9 +52,10 @@ public class RelatorioCaixaDAO {
     public ArrayList<RelatorioCaixa> getRelatorioCaixa(String dataInicial, String dataFinal) {
         ArrayList<RelatorioCaixa> listaRelatorioCaixa = new ArrayList<>();
         try {
-            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, NOTAFISCAL.DT_EMISSAO FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND DATE(NOTAFISCAL.DT_EMISSAO) BETWEEN '" + dataInicial + "' AND '" + dataFinal + "' GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)", null);
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
+            String sql = "SELECT CAIXA.NR_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, NOTAFISCAL.DT_EMISSAO FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA  GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)";
+            System.out.println(sql);
+            Cursor cursor = bd.rawQuery(sql, null);
+            if (cursor.moveToFirst()) {
                 do {
                     RelatorioCaixa relatorioCaixa = new RelatorioCaixa();
                     Caixa caixa = new Caixa();

@@ -11,9 +11,17 @@ import br.unipar.swiftsales.view.CaixaActivity;
 
 public class CaixaController {
     private Context context;
+    public static CaixaController instancia;
 
     public CaixaController(Context context) {
         this.context = context;
+    }
+    public static CaixaController getInstancia(Context context){
+        if (instancia == null) {
+            return instancia = new CaixaController(context);
+        } else {
+            return instancia;
+        }
     }
 
     public ArrayList<Caixa> getAllCaixas() {

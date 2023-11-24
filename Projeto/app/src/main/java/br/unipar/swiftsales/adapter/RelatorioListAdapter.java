@@ -39,11 +39,11 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListAdap
     public void onBindViewHolder(@NonNull RelatorioListAdapter.ClienteViewHolder holder, int position) {
         RelatorioCaixa relatorioCaixa = listaRelatorioCaixa.get(position);
         holder.tvStatus.setText(relatorioCaixa.getCaixa().getStCaixa().descricao.replace("A", "Aberto").replace("F", "Fechado"));
-
-
+        holder.tvData.setText(relatorioCaixa.getCaixa().getDtCaixa());
+        holder.tvCodigo.setText(String.valueOf(relatorioCaixa.getCaixa().getNrCaixa()));
+        holder.tvQuantidadeVendas.setText(String.valueOf(relatorioCaixa.getQtVendas()));
+        holder.tvVlSaldo.setText(String.valueOf(relatorioCaixa.getVlSaldo()));
     }
-
-
 
     @Override
     public int getItemCount() {
