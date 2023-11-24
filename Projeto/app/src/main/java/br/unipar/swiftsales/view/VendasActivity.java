@@ -1,5 +1,7 @@
 package br.unipar.swiftsales.view;
 
+import static br.unipar.swiftsales.utils.DataAtual.getDataAtual;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,8 +29,13 @@ import br.unipar.swiftsales.controller.ItemNFController;
 import br.unipar.swiftsales.controller.NotaFiscalController;
 import br.unipar.swiftsales.controller.ProdutoController;
 import br.unipar.swiftsales.dao.ClienteDAO;
+import br.unipar.swiftsales.dao.ItemNFDAO;
+import br.unipar.swiftsales.dao.NotaFiscalDAO;
+import br.unipar.swiftsales.dao.VendedorDAO;
 import br.unipar.swiftsales.model.ItemNF;
+import br.unipar.swiftsales.model.NotaFiscal;
 import br.unipar.swiftsales.model.Produto;
+import br.unipar.swiftsales.model.Vendedor;
 
 public class VendasActivity extends AppCompatActivity {
 
@@ -46,6 +53,8 @@ public class VendasActivity extends AppCompatActivity {
     private RecyclerView rvProdutos;
     private AlertDialog produtoDialog;
 
+    private NotaFiscal venda;
+
     public static VendasActivity instancia;
     public VendasActivity(){
         instancia = this;
@@ -60,7 +69,12 @@ public class VendasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vendas);
 
         ivVoltar = findViewById(R.id.ivVoltar);
-        ivVoltar.setOnClickListener(view -> finish());
+        ivVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         tvNumeroVenda = findViewById(R.id.tvNumeroVenda);
         tvVlTotalVenda = findViewById(R.id.tvVlTotalVenda);
@@ -76,6 +90,19 @@ public class VendasActivity extends AppCompatActivity {
             }
         });
 
+        venda = new NotaFiscal();
+        venda.setNrNotaFiscal(NotaFiscalController.getInstancia(this).retornaProximoCodigo());
+        venda.setNrCaixa(1);
+        venda.setDtEmissao(getDataAtual());
+        NotaFiscalDAO.getInstancia(this).insertTemp(venda);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        ItemNFDAO.getInstancia(VendasActivity.this).deleteAllItensNota(NotaFiscalController.getInstancia(VendasActivity.this).retornaUltimoCodigo());
+        NotaFiscalDAO.getInstancia(VendasActivity.this).delete(NotaFiscalController.getInstancia(VendasActivity.this).retornaUltimoCodigo());
+        super.onBackPressed();
     }
 
     public void adicionarProduto(){

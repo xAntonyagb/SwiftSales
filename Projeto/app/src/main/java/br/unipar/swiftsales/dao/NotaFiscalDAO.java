@@ -40,7 +40,7 @@ public class NotaFiscalDAO {
         this.context = context;
         //Abrir uma conexão da BD
         openHelper = new SQLiteDataHelper(this.context, "UNIPAR_BD",
-                null, 1);
+                null, 2);
         //Carrega a BD e da permissão para escrever na tabela
         db = openHelper.getWritableDatabase();
     }
@@ -62,6 +62,21 @@ public class NotaFiscalDAO {
             valores.put(colunas[4], obj.getVendedor().getCdVendedor());
             valores.put(colunas[5], obj.getCliente().getCdCliente());
             valores.put(colunas[6], obj.getFormaPagamento().ordinal());
+            valores.put(colunas[7], obj.getNrCaixa());
+
+
+            return db.insert(nomeTabela, null, valores);
+        } catch (SQLException ex) {
+            Log.e("ERRO","NotaFiscalDAO.insert():" +ex.getMessage());
+        }
+        return 0;
+    }
+
+    public long insertTemp(NotaFiscal obj) {
+        try {
+            ContentValues valores = new ContentValues();
+            valores.put(colunas[0], obj.getNrNotaFiscal());
+            valores.put(colunas[2], obj.getDtEmissao());
             valores.put(colunas[7], obj.getNrCaixa());
 
 

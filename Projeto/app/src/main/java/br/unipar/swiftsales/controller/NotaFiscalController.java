@@ -28,8 +28,8 @@ public class NotaFiscalController {
         return NotaFiscalDAO.getInstancia(context).getById(nrNotaFiscal);
     }
 
-    public String retornaProximoCodigo(){
-        return String.valueOf(NotaFiscalDAO.getInstancia(context).getProximoCodigo());
+    public int retornaProximoCodigo(){
+        return NotaFiscalDAO.getInstancia(context).getProximoCodigo();
     }
 
     public int retornaUltimoCodigo(){

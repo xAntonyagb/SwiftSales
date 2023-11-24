@@ -34,7 +34,7 @@ public class RelatorioCaixaDAO {
         this.context = context;
         //Abrir uma conexão da BD
         openHelper = new SQLiteDataHelper(this.context, "UNIPAR_BD",
-                null, 1);
+                null, 2);
         //Carrega a BD e da permissão para escrever na tabela
         bd = openHelper.getWritableDatabase();
     }

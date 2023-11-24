@@ -97,7 +97,7 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //VendasActivity.getInstancia().carregaListaProdutosVenda();
+                VendasActivity.getInstancia().carregaListaProdutosVenda();
 
             }
         });

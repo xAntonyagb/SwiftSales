@@ -29,7 +29,7 @@ public class VendedorDAO implements GenericDAO<Vendedor>{
     public VendedorDAO(Context context) {
         this.context = context;
 
-        openHelper = new SQLiteDataHelper(this.context, "UNIPAR_DB", null, 1); // Abrindo conexão com o BD
+        openHelper = new SQLiteDataHelper(this.context, "UNIPAR_DB", null, 2); // Abrindo conexão com o BD
         db = openHelper.getWritableDatabase(); //Disponibilizar escrita na database
     }
 

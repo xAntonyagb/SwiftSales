@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import br.unipar.swiftsales.controller.ProdutoController;
 import br.unipar.swiftsales.enums.FormaPagamentoEnum;
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Cliente;
@@ -17,6 +18,7 @@ import br.unipar.swiftsales.model.ItemNF;
 import br.unipar.swiftsales.model.NotaFiscal;
 import br.unipar.swiftsales.model.Produto;
 import br.unipar.swiftsales.model.Vendedor;
+import br.unipar.swiftsales.view.VendasActivity;
 
 public class ItemNFDAO {
 
@@ -41,7 +43,7 @@ public class ItemNFDAO {
         this.context = context;
         //Abrir uma conexão da BD
         openHelper = new SQLiteDataHelper(this.context, "UNIPAR_BD",
-                null, 1);
+                null, 2);
         //Carrega a BD e da permissão para escrever na tabela
         db = openHelper.getWritableDatabase();
     }
@@ -82,7 +84,7 @@ public class ItemNFDAO {
 
             String[] identificador = {String.valueOf(obj.getNrNotaFiscal()), String.valueOf(obj.getProduto().getCdProduto())};
 
-            return db.update(nomeTabela, valores, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador);
+            return db.update(nomeTabela, valores, colunas[0] + " = ? AND " + colunas[1] + " = ? ", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.update():" +ex.getMessage());
         }
@@ -92,7 +94,7 @@ public class ItemNFDAO {
     public long delete(int nrNotaFiscal, int cdProduto) {
         try {
             String[] identificador = {String.valueOf(nrNotaFiscal), String.valueOf(cdProduto)};
-            return db.delete(nomeTabela, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador);
+            return db.delete(nomeTabela, colunas[0] + " = ? AND " + colunas[1] + " = ? ", identificador);
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.delete():" +ex.getMessage());
         }
@@ -104,7 +106,7 @@ public class ItemNFDAO {
         ItemNF itemNF = new ItemNF();
         try {
             String[] identificador = {String.valueOf(nrNotaFiscal), String.valueOf(cdProduto)};
-            Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " = ? " + colunas[1] + " = ? ", identificador, null, null, null);
+            Cursor cursor = db.query(nomeTabela, colunas, colunas[0] + " = ? AND " + colunas[1] + " = ? ", identificador, null, null, null);
             if (cursor.moveToFirst()) {
 
                 itemNF.setNrNotaFiscal(cursor.getInt(0));
@@ -140,9 +142,10 @@ public class ItemNFDAO {
 
                    // Procurando e setando o produto pelo código no banco de dados
                    int codProduto = cursor.getInt(1);
+                   System.out.println("Produto: " + codProduto);
                    Produto produto = ProdutoDAO.getInstancia(context).getById(codProduto);
+                   System.out.println("Produto: " + produto.toString());
                    itemNF.setProduto(produto);
-
                    itemNF.setVlUnitItem(cursor.getDouble(2));
                    itemNF.setVlDesconto(cursor.getDouble(3));
                    itemNF.setVlSubTotal(cursor.getDouble(4));
@@ -154,5 +157,15 @@ public class ItemNFDAO {
             Log.e("ERRO","ItemNFDAO.getAll():" +ex.getMessage());
         }
         return listaItemNf;
+    }
+    public long deleteAllItensNota(int nrNotaFiscal) { //Retorna todos os itens dentro dessa nota fiscal
+        try {
+            //Executa a consulta no banco de dados procurando todas os itens da nota fiscal usando o código da nota fiscal
+            String[] identificador = {String.valueOf(nrNotaFiscal)};
+            return db.delete("ITEMNF", colunas[0] + " = ?", identificador);
+        } catch (SQLException ex) {
+            Log.e("ERRO","ItemNFDAO.getAll():" +ex.getMessage());
+        }
+        return 0;
     }
 }

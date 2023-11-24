@@ -34,7 +34,7 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         this.context = context;
         //Abrir uma conexão da BD
         openHelper = new SQLiteDataHelper(this.context, "UNIPAR_BD",
-                null, 1);
+                null, 2);
         //Carrega a BD e da permissão para escrever na tabela
         bd = openHelper.getWritableDatabase();
     }
@@ -111,13 +111,12 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         return lista;
     }
     @Override
-    public Produto getById(int id) {
-        Produto produto = null;
+    public Produto getById(int cdProduto) {
+        Produto produto = new Produto();
         try {
-            String[] identificador = {String.valueOf(id)};
+            String[] identificador = {String.valueOf(cdProduto)};
             Cursor cursor = bd.query(nomeTabela, colunas, colunas[0] + " = ?", identificador, null, null, null);
             if (cursor.moveToFirst()) {
-                produto = new Produto();
                 produto.setCdProduto(cursor.getInt(0));
                 produto.setDsProduto(cursor.getString(1));
                 produto.setVlProduto(cursor.getDouble(2));
@@ -127,7 +126,7 @@ public class ProdutoDAO implements GenericDAO<Produto>{
         } catch (SQLException ex) {
             Log.e("ERRO","ProdutoDAO.getById():" +ex.getMessage());
         }
-        return null;
+        return produto;
     }
 
     public int getProximoCodigo(){
