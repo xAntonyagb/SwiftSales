@@ -30,7 +30,7 @@ public class NotaFiscalDAO {
     private String nomeTabela = "NOTAFISCAL";
 
     //Nome das colunas da tabela
-    private String[]colunas = {"NR_NOTAFISCAL", "VL_NOTAFISCAL","DT_EMISSAO", "NR_CHAVEACESSO", "CD_VENDEDOR", "CD_CLIENTE", "CD_FORMAPAGAMENTO", "NR_CAIXA"};
+    private String[]colunas = {"NR_NOTAFISCAL", "VL_NOTAFISCAL","DT_EMISSAO", "NR_CHAVEACESSO", "CD_VENDEDOR", "CD_CLIENTE", "CD_FORMAPAGTO", "NR_CAIXA"};
 
     private Context context;
 

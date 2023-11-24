@@ -38,6 +38,7 @@ public class NotaFiscalController {
 
     public String salvarNotaFiscal(NotaFiscal obj){
         try{
+            System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
             //Validar os campos
             if(obj.getNrNotaFiscal() == 0){
                 return "Nota Fiscal não informado.";
@@ -63,7 +64,7 @@ public class NotaFiscalController {
             if(obj.getFormaPagamento() == null){
                 return "Forma de Pagamento não informada.";
             }
-
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             NotaFiscal notaFiscal = NotaFiscalDAO.getInstancia(context).getById(obj.getNrNotaFiscal());
 
             if(notaFiscal != null) {
@@ -137,6 +138,17 @@ public class NotaFiscalController {
             return "Erro ao excluir Nota Fiscal.";
         }
         return null;
+    }
+
+    public double retornaValorTotalVenda(int nrNotaFiscal){
+        ArrayList<ItemNF> itensNota = NotaFiscalDAO.getInstancia(context).getAllItensNota(nrNotaFiscal);
+
+        double valorTotal = 0;
+        for (ItemNF itemNF : itensNota) {
+            valorTotal += itemNF.getVlSubTotal();
+        }
+
+        return valorTotal;
     }
 
 

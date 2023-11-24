@@ -115,7 +115,7 @@ public class NotaFiscal {
                 ", cliente=" + cliente.getNmCliente() +
                 ", formaPagamento=" + formaPagamento.descricao +
                 ", nrCaixa=" + nrCaixa +
-                ", listaItens=" + listaItens.toString() +
+                ", listaItens=" + listaItens +
                 '}';
     }
 }

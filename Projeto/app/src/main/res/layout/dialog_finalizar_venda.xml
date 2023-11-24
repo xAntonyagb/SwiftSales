@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FINALIZAR VERDA"
+                android:text="FINALIZAR VENDA"
                 android:fontFamily="@font/gugi"
                 android:textColor="#FFFFFF"
                 android:textSize="26sp"
@@ -43,18 +43,6 @@
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
                 android:id="@+id/tvToolbarTitulo"
-                />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_backarrow"
-                android:rotation="90"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/ivVoltar"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -94,7 +82,7 @@
             android:textColor="@color/swiftSales_background_button_gray"
             android:textSize="24sp"
             android:layout_marginLeft="5dp"
-            android:id="@+id/tvNumeroVenda"
+            android:id="@+id/tvNumeroVendaFinalizar"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -124,11 +112,11 @@
             android:textStyle="bold"
             android:layout_marginRight="5dp"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/tvVlTotalVenda"
+            app:layout_constraintEnd_toStartOf="@+id/tvVlTotalVendaFinalizar"
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/tvVlTotalVenda"
+            android:id="@+id/tvVlTotalVendaFinalizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00"
@@ -177,10 +165,10 @@
 
         <Spinner
             android:id="@+id/spFormaPagamento"
-            android:layout_width="172dp"
+            android:layout_width="130dp"
             android:layout_marginLeft="10dp"
             android:layout_height="40dp"
-            android:spinnerMode="dropdown"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvFormaPagamento"
             app:layout_constraintTop_toTopOf="parent"
@@ -217,7 +205,7 @@
             android:layout_width="193dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:spinnerMode="dropdown"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvCliente"
             app:layout_constraintTop_toTopOf="parent"
@@ -253,7 +241,7 @@
             android:layout_width="172dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:spinnerMode="dropdown"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvVendedor"
             app:layout_constraintTop_toTopOf="parent"

@@ -27,4 +27,9 @@ public class Vendedor {
     public void setNmVendedor(String nmVendedor) {
         this.nmVendedor = nmVendedor;
     }
+
+    @Override
+    public String toString() {
+        return  nmVendedor;
+    }
 }

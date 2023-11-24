@@ -46,7 +46,7 @@ public class VendedorController {
         }
         return null;
     }
-    public ArrayList<Vendedor> retornaListaClientes(){
+    public ArrayList<Vendedor> retornaListaVendedores(){
         return VendedorDAO.getInstancia(context).getAll();
     }
     public String alterarVendedor(String cdVendedor, String nmVendedor){
