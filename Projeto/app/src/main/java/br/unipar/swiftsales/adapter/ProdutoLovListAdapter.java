@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -98,7 +99,7 @@ public class ProdutoLovListAdapter extends RecyclerView.Adapter<ProdutoLovListAd
                     e.printStackTrace();
                 }
                 VendasActivity.getInstancia().carregaListaProdutosVenda();
-
+                Toast.makeText(view.getContext(), "Produto adicionado!", Toast.LENGTH_SHORT).show();
             }
         });
 

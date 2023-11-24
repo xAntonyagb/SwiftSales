@@ -55,11 +55,11 @@ public class RelatorioCaixaDAO {
                 do {
                     RelatorioCaixa relatorioCaixa = new RelatorioCaixa();
                     Caixa caixa = new Caixa();
-                    int numeroCaixa = cursor.getInt(cursor.getColumnIndex("CD_CAIXA"));
+                    int numeroCaixa = cursor.getInt(0);
                     caixa = CaixaDAO.getInstancia(context).getById(numeroCaixa);
                     relatorioCaixa.setCaixa(caixa);
-                    relatorioCaixa.setQtVendas(cursor.getInt(cursor.getColumnIndex("QT_TOTVENDA")));
-                    relatorioCaixa.setVlSaldo(cursor.getDouble(cursor.getColumnIndex("VL_TOTVENDA")) - caixa.getVlInicial());
+                    relatorioCaixa.setQtVendas(cursor.getInt(1));
+                    relatorioCaixa.setVlSaldo(cursor.getDouble(2) - caixa.getVlInicial());
                     listaRelatorioCaixa.add(relatorioCaixa);
                 } while (cursor.moveToNext());
             }

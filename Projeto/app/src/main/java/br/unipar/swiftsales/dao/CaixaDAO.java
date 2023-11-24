@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import br.unipar.swiftsales.enums.StatusCaixaEnum;
 import br.unipar.swiftsales.helper.SQLiteDataHelper;
 import br.unipar.swiftsales.model.Caixa;
+import br.unipar.swiftsales.model.RelatorioCaixa;
 
 public class CaixaDAO {
 
@@ -83,15 +84,15 @@ public class CaixaDAO {
     public ArrayList<Caixa> getAll() {
         ArrayList<Caixa> lista = new ArrayList<>();
         try {
-            Cursor cursor = bd.query("CAIXA", null, null, null, null, null, null);
+            Cursor cursor = bd.query(nomeTabela, colunas, null, null, null, null, colunas[0]);
             if (cursor.moveToFirst()) {
                 do {
                     Caixa caixa = new Caixa();
-                    caixa.setNrCaixa(cursor.getInt(cursor.getColumnIndex("NR_CAIXA")));
-                    caixa.setVlInicial(cursor.getDouble(cursor.getColumnIndex("VL_INICIAL")));
-                    caixa.setVlFinal(cursor.getDouble(cursor.getColumnIndex("VL_FINAL")));
-                    caixa.setDtCaixa(cursor.getString(cursor.getColumnIndex("DT_CAIXA")));
-                    caixa.setStCaixa(StatusCaixaEnum.valueOf(cursor.getString(cursor.getColumnIndex("ST_CAIXA"))));
+                    caixa.setNrCaixa(cursor.getInt(0));
+                    caixa.setVlInicial(cursor.getDouble(1));
+                    caixa.setVlFinal(cursor.getDouble(2));
+                    caixa.setDtCaixa(cursor.getString(3));
+                    caixa.setStCaixa(StatusCaixaEnum.valueOf(cursor.getString(4)));
                     lista.add(caixa);
                 } while (cursor.moveToNext());
             }
@@ -107,11 +108,11 @@ public class CaixaDAO {
             Cursor cursor = bd.query("CAIXA", null, "NR_CAIXA = ?", identificador, null, null, null);
             if (cursor.moveToFirst()) {
                 caixa = new Caixa();
-                caixa.setNrCaixa(cursor.getInt(cursor.getColumnIndex("NR_CAIXA")));
-                caixa.setVlInicial(cursor.getDouble(cursor.getColumnIndex("VL_INICIAL")));
-                caixa.setVlFinal(cursor.getDouble(cursor.getColumnIndex("VL_FINAL")));
-                caixa.setDtCaixa(cursor.getString(cursor.getColumnIndex("DT_CAIXA")));
-                caixa.setStCaixa(StatusCaixaEnum.valueOf(cursor.getString(cursor.getColumnIndex("ST_CAIXA"))));
+                caixa.setNrCaixa(cursor.getInt(0));
+                caixa.setVlInicial(cursor.getDouble(1));
+                caixa.setVlFinal(cursor.getDouble(2));
+                caixa.setDtCaixa(cursor.getString(3));
+                caixa.setStCaixa(StatusCaixaEnum.valueOf(cursor.getString(4)));
             }
         } catch (SQLException ex) {
             Log.e("ERRO", "CaixaDAO.getById():" + ex.getMessage());
@@ -160,6 +161,49 @@ public class CaixaDAO {
         } catch (SQLException ex) {
             Log.e("ERRO", "CaixaDAO.atualizarStatusCaixa():" + ex.getMessage());
         }
+    }
+
+
+    public int getProximoCodigo(){
+        try {
+            Cursor cursor = bd.rawQuery("SELECT MAX(" + colunas[0] + ") FROM "+ nomeTabela, null);
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0) + 1;
+            }
+        }catch (SQLException ex){
+            Log.e("ERRO","CaixaDAO.getProximoCodigo():" +ex.getMessage());
+        }
+        return 0;
+    }
+
+    public int getUltimoCodigo(){
+        try {
+            Cursor cursor = bd.rawQuery("SELECT MAX(" + colunas[0] + ") FROM "+ nomeTabela, null);
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        }catch (SQLException ex){
+            Log.e("ERRO","CaixaDAO.getProximoCodigo():" +ex.getMessage());
+        }
+        return 0;
+    }
+
+
+    public double retornaSaldoFinal(int codCaixa) {
+        double saldoFinal = 0;
+        try {
+            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, CAIXA.VL_INICIAL, SUM(NOTAFISCAL.VL_NOTAFISCAL) AS VL_ENTRADA FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND CAIXA.NR_CAIXA = "+ codCaixa +" GROUP BY CAIXA.NR_CAIXA", null);
+
+            if (cursor.moveToFirst()) {
+                    saldoFinal = cursor.getDouble(2) + cursor.getDouble(1);
+            }
+        } catch (SQLException e) {
+            Log.e("Erro ao buscar dados do relatório. Erro:", e.getMessage());
+        }
+        return saldoFinal;
+
+
+
     }
 
 }

@@ -36,6 +36,7 @@ import br.unipar.swiftsales.controller.ItemNFController;
 import br.unipar.swiftsales.controller.NotaFiscalController;
 import br.unipar.swiftsales.controller.ProdutoController;
 import br.unipar.swiftsales.controller.VendedorController;
+import br.unipar.swiftsales.dao.CaixaDAO;
 import br.unipar.swiftsales.dao.ClienteDAO;
 import br.unipar.swiftsales.dao.ItemNFDAO;
 import br.unipar.swiftsales.dao.NotaFiscalDAO;
@@ -112,7 +113,6 @@ public class VendasActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 adicionarProduto();
-                Toast.makeText(VendasActivity.this, "Produto adicionado!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,6 +126,16 @@ public class VendasActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        if(CaixaDAO.getInstancia(this).isCaixaAberto() == false){
+            Toast.makeText(this, "Abra o caixa para iniciar uma venda!", Toast.LENGTH_SHORT).show();
+
+            CaixaActivity.getInstancia().
+            finish();
+        }
+
+
 
         tvNumeroVenda.setText(String.valueOf(NotaFiscalController.getInstancia(this).retornaUltimoCodigo()));
 
