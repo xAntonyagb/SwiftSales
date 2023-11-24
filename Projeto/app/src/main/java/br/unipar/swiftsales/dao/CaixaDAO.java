@@ -25,7 +25,7 @@ public class CaixaDAO {
 
     private String nomeTabela = "CAIXA";
 
-    private String[] colunas = {"NR_CAIXA", "VL_INICIAL", "VL_FINAL", "DT_CAIXA", "DATA_FECHAMENTO"};
+    private String[] colunas = {"NR_CAIXA", "VL_INICIAL", "VL_FINAL", "DT_CAIXA", "ST_CAIXA"};
 
     public CaixaDAO(Context context) {
         this.context = context;
@@ -48,7 +48,7 @@ public class CaixaDAO {
         valores.put("VL_INICIAL", caixa.getVlInicial());
         valores.put("VL_FINAL", caixa.getVlFinal());
         valores.put("DT_CAIXA", caixa.getDtCaixa());
-        valores.put("ST_CAIXA", caixa.getStCaixa().descricao.replace("A","ABERTO").replace("F","FECHADO"));
+        valores.put("ST_CAIXA", caixa.getStCaixa().descricao);
 
         String[] identificador = {String.valueOf(caixa.getNrCaixa())};
 
@@ -66,6 +66,7 @@ public class CaixaDAO {
             valores.put(colunas[1], obj.getVlInicial());
             valores.put(colunas[2], obj.getVlFinal());
             valores.put(colunas[3], obj.getDtCaixa());
+            valores.put(colunas[4], obj.getStCaixa().descricao);
             
 
             return bd.insert(nomeTabela, null, valores);
@@ -122,10 +123,10 @@ public class CaixaDAO {
     public boolean isCaixaAberto() {
         boolean caixaAberto = false;
 
-        Cursor cursor = bd.rawQuery("SELECT ST_CAIXA FROM CAIXA LIMIT 1", null);
+        Cursor cursor = bd.rawQuery("SELECT ST_CAIXA FROM CAIXA WHERE NR_CAIXA = 1", null);
         if (cursor.moveToFirst()) {
             String statusCaixa = cursor.getString(0);
-            caixaAberto = statusCaixa.equalsIgnoreCase("ABERTO");
+            caixaAberto = statusCaixa.equals("A");
         }
 
         cursor.close();
@@ -192,7 +193,7 @@ public class CaixaDAO {
     public double retornaSaldoFinal(int codCaixa) {
         double saldoFinal = 0;
         try {
-            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, CAIXA.VL_INICIAL, SUM(NOTAFISCAL.VL_NOTAFISCAL) AS VL_ENTRADA FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND CAIXA.NR_CAIXA = "+ codCaixa +" GROUP BY CAIXA.NR_CAIXA", null);
+            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, CAIXA.VL_INICIAL, SUM(NOTAFISCAL.VL_NOTAFISCAL) AS VL_ENTRADA FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND DATE(CAIXA.DT_CAIXA) = DATE(NOTAFISCAL.DT_EMISSAO) AND CAIXA.NR_CAIXA = "+ codCaixa +" GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)", null);
 
             if (cursor.moveToFirst()) {
                     saldoFinal = cursor.getDouble(2) + cursor.getDouble(1);

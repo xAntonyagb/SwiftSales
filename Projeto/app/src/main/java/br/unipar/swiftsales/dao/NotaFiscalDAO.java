@@ -95,7 +95,11 @@ public class NotaFiscalDAO {
             valores.put(colunas[2], obj.getDtEmissao());
             valores.put(colunas[3], obj.getNrChaveAcesso());
             valores.put(colunas[4], obj.getVendedor().getCdVendedor());
-            valores.put(colunas[5], obj.getCliente().getCdCliente());
+            if (obj.getCliente() != null) {
+                if (obj.getCliente().getCdCliente() != 0) {
+                    valores.put(colunas[5], obj.getCliente().getCdCliente());
+                }
+            }
             valores.put(colunas[6], obj.getFormaPagamento().ordinal());
             valores.put(colunas[7], obj.getNrCaixa());
 
@@ -260,4 +264,17 @@ public class NotaFiscalDAO {
         return lista;
     }
 
+    public double getValorTotalVenda(int nrNotaFiscal){
+        double valorTotal = 0;
+        try {
+            String[] identificador = {String.valueOf(nrNotaFiscal)};
+            Cursor cursor = db.rawQuery("SELECT SUM(VL_SUBTOTAL) FROM ITEMNF WHERE NR_NOTAFISCAL = ?", identificador);
+            if (cursor.moveToFirst()) {
+                valorTotal = cursor.getDouble(0);
+            }
+        }catch (SQLException ex){
+            Log.e("ERRO","NotaFiscalDAO.getValorTotalVenda():" +ex.getMessage());
+        }
+        return valorTotal;
+    }
 }

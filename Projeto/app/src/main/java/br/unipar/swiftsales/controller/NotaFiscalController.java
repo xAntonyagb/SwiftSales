@@ -63,6 +63,7 @@ public class NotaFiscalController {
             if(obj.getFormaPagamento() == null){
                 return "Forma de Pagamento não informada.";
             }
+
             NotaFiscal notaFiscal = NotaFiscalDAO.getInstancia(context).getById(obj.getNrNotaFiscal());
 
             if(notaFiscal != null) {
@@ -138,17 +139,8 @@ public class NotaFiscalController {
         return null;
     }
 
+
     public double retornaValorTotalVenda(int nrNotaFiscal){
-        ArrayList<ItemNF> itensNota = NotaFiscalDAO.getInstancia(context).getAllItensNota(nrNotaFiscal);
-
-        double valorTotal = 0;
-        for (ItemNF itemNF : itensNota) {
-            valorTotal += itemNF.getVlSubTotal();
-        }
-
-        return valorTotal;
+        return NotaFiscalDAO.getInstancia(context).getValorTotalVenda(nrNotaFiscal);
     }
-
-
-
 }
