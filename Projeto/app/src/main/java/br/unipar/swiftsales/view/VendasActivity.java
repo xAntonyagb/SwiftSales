@@ -131,8 +131,8 @@ public class VendasActivity extends AppCompatActivity {
         if(CaixaDAO.getInstancia(this).isCaixaAberto() == false){
             Toast.makeText(this, "Abra o caixa para iniciar uma venda!", Toast.LENGTH_SHORT).show();
 
-            CaixaActivity.getInstancia().
-            finish();
+//            CaixaActivity.getInstancia().
+//            finish();
         }
 
 
