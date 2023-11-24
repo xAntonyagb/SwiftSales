@@ -100,10 +100,11 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/jaldi"
             android:text="Buscar"
             android:id="@+id/btGerarRelatorio"
             android:backgroundTint="@color/swiftSales_background_button_gray"
-            android:fontFamily="@font/jaldi"
             android:layout_gravity="center"/>
 
         <LinearLayout
