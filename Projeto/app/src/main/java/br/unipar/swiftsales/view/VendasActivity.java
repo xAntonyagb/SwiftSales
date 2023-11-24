@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -120,9 +121,8 @@ public class VendasActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(NotaFiscalController.getInstancia(VendasActivity.this).retornaValorTotalVenda(NotaFiscalController.getInstancia(VendasActivity.this).retornaUltimoCodigo()) > 0) {
                     finalizarVenda();
-                    Toast.makeText(VendasActivity.this, "Venda finalizada com sucesso!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(VendasActivity.this, "Não é possível finalizar uma venda sem itens!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VendasActivity.this, "Adicione itens para finalizar uma venda!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -317,6 +317,19 @@ public class VendasActivity extends AppCompatActivity {
     }
 
     private void terminarOperacao() {
+        LoadingDialog loadingDialog = new LoadingDialog(VendasActivity.this);
+        loadingDialog.startLoadingDialog();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismissDialog();
+                Toast.makeText(VendasActivity.this, "Venda finalizada com sucesso!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }, 5000);
+
     }
 
 
