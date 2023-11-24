@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -56,7 +57,7 @@ public class CaixaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (lnCaixasAbertos.getVisibility() == View.INVISIBLE) {
-                    exibirMensagemErro("Erro: Nenhum caixa aberto para fechar!");
+                    exibirMensagemErro("Nenhum caixa aberto para fechar!");
                 } else {
 
                 exibirFecharCaixa();
@@ -67,7 +68,7 @@ public class CaixaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (lnCaixasAbertos.getVisibility() == View.VISIBLE) {
-                    exibirMensagemErro("Erro: Caixa já está aberto!");
+                    exibirMensagemErro("Caixa já está aberto!");
                 } else {
                     exibirAbrirCaixa();
                 }
@@ -84,7 +85,7 @@ public class CaixaActivity extends AppCompatActivity {
         if (caixaDAO.isCaixaAberto()) {
             double valorInicial = caixaDAO.getValorInicial();
 
-            // Se o valor for válido, exibir em tvValorInicial
+
             if (valorInicial != -1) {
                 edSaldoInicial.setText(String.format(Locale.getDefault(), "R$ %.2f", valorInicial));
             }
@@ -162,6 +163,7 @@ public class CaixaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                         abrirTelaPrincipal();
+
                     }
             });
             updateCurrentDate();
@@ -180,7 +182,7 @@ public class CaixaActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        
+
     private void exibirMensagemErro(String mensagem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Erro")
@@ -192,6 +194,7 @@ public class CaixaActivity extends AppCompatActivity {
         Intent intent = new Intent(CaixaActivity.this,
                 MainActivity.class);
         startActivity(intent);
+        Toast.makeText(this, "Caixa fechado com sucesso!", Toast.LENGTH_LONG).show();
     }
 
 }
