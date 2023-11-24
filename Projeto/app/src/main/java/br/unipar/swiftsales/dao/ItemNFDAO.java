@@ -120,8 +120,8 @@ public class ItemNFDAO {
                 itemNF.setVlDesconto(cursor.getDouble(3));
                 itemNF.setVlSubTotal(cursor.getDouble(4));
                 itemNF.setQtProduto(cursor.getInt(5));
+                return itemNF;
             }
-            return itemNF;
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.getById():" +ex.getMessage());
         }
@@ -152,6 +152,7 @@ public class ItemNFDAO {
                    itemNF.setQtProduto(cursor.getInt(5));
                    listaItemNf.add(itemNF);
                } while (cursor.moveToNext());
+               return listaItemNf;
            }
         } catch (SQLException ex) {
             Log.e("ERRO","ItemNFDAO.getAll():" +ex.getMessage());

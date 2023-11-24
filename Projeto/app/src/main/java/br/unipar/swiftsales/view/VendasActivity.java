@@ -176,6 +176,7 @@ public class VendasActivity extends AppCompatActivity {
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                System.out.println("ItemNF: " + itemNF.toString());
                 ItemNFController.getInstancia(VendasActivity.this).excluirItemNF(itemNF.getNrNotaFiscal(), itemNF.getProduto().getCdProduto());
                 carregaListaProdutosVenda();
                 dialogInterface.dismiss();
