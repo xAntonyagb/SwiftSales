@@ -44,11 +44,11 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
             />
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/edSaldoFinal"
+            android:id="@+id/tvSaldoFinal"
             android:text=""
             android:layout_marginTop="20dp"
             android:inputType="numberDecimal"

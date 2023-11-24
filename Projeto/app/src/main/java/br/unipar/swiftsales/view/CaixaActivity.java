@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.unipar.swiftsales.R;
+import br.unipar.swiftsales.dao.CaixaDAO;
+import br.unipar.swiftsales.enums.StatusCaixaEnum;
 import br.unipar.swiftsales.model.Caixa;
 
 public class CaixaActivity extends AppCompatActivity {
@@ -53,97 +55,144 @@ public class CaixaActivity extends AppCompatActivity {
         btFecharCaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (lnCaixasAbertos.getVisibility() == View.INVISIBLE) {
+                    exibirMensagemErro("Erro: Nenhum caixa aberto para fechar!");
+                } else {
+
                 exibirFecharCaixa();
+                }
             }
         });
         btAbrirCaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exibirAbrirCaixa();
+                if (lnCaixasAbertos.getVisibility() == View.VISIBLE) {
+                    exibirMensagemErro("Erro: Caixa já está aberto!");
+                } else {
+                    exibirAbrirCaixa();
+                }
             }
         });
 
     }
-    private void exibirAbrirCaixa() {
-        Dialog dialog_abrir_caixa = new Dialog(this);
-        dialog_abrir_caixa.setContentView(R.layout.dialog_abrir_caixa);
-        dialog_abrir_caixa.setTitle("Abrir Caixa");
-        dialog_abrir_caixa.setCanceledOnTouchOutside(true);
-        Button btnAbrirCaixa = dialog_abrir_caixa.findViewById(R.id.btnAbrirCaixa);
-        btnAbrirCaixa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                EditText edSaldoInicial = dialog_fechar_caixa.findViewById(R.id.edSaldoInicial);
-                EditText edSaldoFinal = dialog_fechar_caixa.findViewById(R.id.edSaldoFinal);
+    private void carregarValorInicial() {
+        CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
+        EditText edSaldoInicial = dialog_abrir_caixa.findViewById(R.id.edSaldoInicial);
+        TextView tvSaldoFinal = dialog_abrir_caixa.findViewById(R.id.tvSaldoFinal);
 
-                double vlInicial = Double.parseDouble(edSaldoInicial.getText().toString());
-                double vlFinal = Double.parseDouble(edSaldoFinal.getText().toString());
-                String dtCaixa = atvData.getText().toString();
+        if (caixaDAO.isCaixaAberto()) {
+            double valorInicial = caixaDAO.getValorInicial();
 
-                Caixa caixa = new Caixa();
-
-                Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
-                intent.putExtra("caixa", caixa.getNrCaixa());
-                startActivity(intent);
-
-                dialog_abrir_caixa.dismiss();
+            // Se o valor for válido, exibir em tvValorInicial
+            if (valorInicial != -1) {
+                edSaldoInicial.setText(String.format(Locale.getDefault(), "R$ %.2f", valorInicial));
             }
-        });
-        dialog_abrir_caixa.show();
-    }
+        } else {
 
-    private void exibirFecharCaixa() {
+            edSaldoInicial.setText("0,00");
+        }
+    }
+        public void salvarValorInicial (View view){
+            EditText edSaldoInicial = dialog_abrir_caixa.findViewById(R.id.edSaldoInicial);
+            TextView tvSaldoFinal = dialog_abrir_caixa.findViewById(R.id.tvSaldoFinal);
+
+            String valorInicialStr = edSaldoInicial.getText().toString();
+
+            if (!valorInicialStr.isEmpty()) {
+
+                double valorInicial = Double.parseDouble(valorInicialStr);
+                CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
+                caixaDAO.salvarValorInicial(valorInicial);
+                edSaldoInicial.setText(String.format(Locale.getDefault(), "R$ %.2f", valorInicial));
+            }
+        }
+
+        private void exibirAbrirCaixa () {
+            Dialog dialog_abrir_caixa = new Dialog(this);
+            dialog_abrir_caixa.setContentView(R.layout.dialog_abrir_caixa);
+            dialog_abrir_caixa.setTitle("Abrir Caixa");
+            dialog_abrir_caixa.setCanceledOnTouchOutside(true);
+            Button btnAbrirCaixa = dialog_abrir_caixa.findViewById(R.id.btnAbrirCaixa);
+
+
+            btnAbrirCaixa.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                        abrirCaixa();
+                        dialog_abrir_caixa.dismiss();
+                }
+            });
+            dialog_abrir_caixa.show();
+        }
+    private void abrirCaixa() {
+        CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
+
+            final Dialog dialog_abrir_caixa = new Dialog(this);
+            dialog_abrir_caixa.setContentView(R.layout.dialog_abrir_caixa);
+            dialog_abrir_caixa.setTitle("Abrir Caixa");
+            dialog_abrir_caixa.setCanceledOnTouchOutside(true);
+
+            EditText edSaldoInicial = dialog_abrir_caixa.findViewById(R.id.edSaldoInicial);
+            TextView tvSaldoFinal = dialog_abrir_caixa.findViewById(R.id.tvSaldoFinal);
+
+
+            lnCaixasAbertos.setVisibility(View.VISIBLE);
+            lnCaixasAbertos2.setVisibility(View.VISIBLE);
+            dialog_abrir_caixa.show();
+
+
+            Caixa caixa = new Caixa();
+            caixa.setStCaixa(StatusCaixaEnum.ABERTO);
+            caixaDAO.atualizarStatusCaixa(caixa);
+            dialog_abrir_caixa.dismiss();
+        }
+
+
+        private void exibirFecharCaixa() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_fechar_caixa, null);
+            builder.setView(dialogView);
+            dialog_fechar_caixa = builder.create();
+            dialog_fechar_caixa.show();
+            Button btnFecharCaixa = dialogView.findViewById(R.id.btnFecharCaixa);
+            btnFecharCaixa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        abrirTelaPrincipal();
+                    }
+            });
+            updateCurrentDate();
+        }
+
+
+        private void updateCurrentDate () {
+            Date currentDate = Calendar.getInstance().getTime();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String formattedDate = dateFormat.format(currentDate);
+            atvData.setText(formattedDate);
+        }
+
+        public void abrirRelatorios (View view){
+            Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
+            startActivity(intent);
+        }
+
+        
+    private void exibirMensagemErro(String mensagem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_fechar_caixa, null);
-        builder.setView(dialogView);
-        dialog_fechar_caixa = builder.create();
-        dialog_fechar_caixa.show();
-
-        Button btnFecharCaixa = dialogView.findViewById(R.id.btnFecharCaixa);
-        btnFecharCaixa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog_abrir_caixa.dismiss();
-            }
-        });
-
-        updateCurrentDate();
+        builder.setTitle("Erro")
+                .setMessage(mensagem)
+                .setPositiveButton("OK", null)
+                .show();
     }
-
-    private void updateCurrentDate() {
-        Date currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        String formattedDate = dateFormat.format(currentDate);
-        atvData.setText(formattedDate);
-    }
-
-    public void abrirRelatorios(View view) {
-        Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
+    private void abrirTelaPrincipal() {
+        Intent intent = new Intent(CaixaActivity.this,
+                MainActivity.class);
         startActivity(intent);
-    }
-
-    public void fecharCaixa(View view) {
-        EditText edSaldoInicial = dialog_fechar_caixa.findViewById(R.id.edSaldoInicial);
-        EditText edSaldoFinal = dialog_fechar_caixa.findViewById(R.id.edSaldoFinal);
-
-        double vlInicial = Double.parseDouble(edSaldoInicial.getText().toString());
-        double vlFinal = Double.parseDouble(edSaldoFinal.getText().toString());
-        String dtCaixa = atvData.getText().toString();
-
-
-
-        Caixa caixa = new Caixa();
-        lnCaixasAbertos.setVisibility(View.INVISIBLE);
-        lnCaixasAbertos2.setVisibility(View.INVISIBLE);
-
-        Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
-        intent.putExtra("caixa", caixa.getNrCaixa());
-        startActivity(intent);
-
-
-
-        dialog_abrir_caixa.dismiss();
     }
 
 }
+

@@ -118,4 +118,48 @@ public class CaixaDAO {
         }
         return caixa;
     }
+    public boolean isCaixaAberto() {
+        boolean caixaAberto = false;
+
+        Cursor cursor = bd.rawQuery("SELECT ST_CAIXA FROM CAIXA LIMIT 1", null);
+        if (cursor.moveToFirst()) {
+            String statusCaixa = cursor.getString(0);
+            caixaAberto = statusCaixa.equalsIgnoreCase("ABERTO");
+        }
+
+        cursor.close();
+        return caixaAberto;
+    }
+    public double getValorInicial() {
+        double valorInicial = -1;
+
+        Cursor cursor = bd.rawQuery("SELECT VL_INICIAL FROM CAIXA LIMIT 1", null);
+        if (cursor.moveToFirst()) {
+            valorInicial = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        return valorInicial;
+    }
+
+    public void salvarValorInicial(double valorInicial) {
+        ContentValues valores = new ContentValues();
+        valores.put("VL_INICIAL", valorInicial);
+
+        bd.update("CAIXA", valores, null, null);
+    }
+    public void atualizarStatusCaixa(Caixa caixa) {
+        ContentValues values = new ContentValues();
+        values.put("ST_CAIXA", caixa.getStCaixa().descricao.replace("A", "ABERTO").replace("F", "FECHADO"));
+
+        String whereClause = "NR_CAIXA = ?";
+        String[] whereArgs = {String.valueOf(caixa.getNrCaixa())};
+
+        try {
+            bd.update("CAIXA", values, whereClause, whereArgs);
+        } catch (SQLException ex) {
+            Log.e("ERRO", "CaixaDAO.atualizarStatusCaixa():" + ex.getMessage());
+        }
+    }
+
 }
