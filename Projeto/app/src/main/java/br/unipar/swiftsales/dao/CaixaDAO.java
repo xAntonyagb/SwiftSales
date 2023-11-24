@@ -113,7 +113,7 @@ public class CaixaDAO {
                 caixa.setVlInicial(cursor.getDouble(1));
                 caixa.setVlFinal(cursor.getDouble(2));
                 caixa.setDtCaixa(cursor.getString(3));
-                caixa.setStCaixa(StatusCaixaEnum.valueOf(cursor.getString(4)));
+                caixa.setStCaixa(StatusCaixaEnum.getEnum(cursor.getString(4)));
             }
         } catch (SQLException ex) {
             Log.e("ERRO", "CaixaDAO.getById():" + ex.getMessage());
@@ -193,7 +193,7 @@ public class CaixaDAO {
     public double retornaSaldoFinal(int codCaixa) {
         double saldoFinal = 0;
         try {
-            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, CAIXA.VL_INICIAL, SUM(NOTAFISCAL.VL_NOTAFISCAL) AS VL_ENTRADA FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND DATE(CAIXA.DT_CAIXA) = DATE(NOTAFISCAL.DT_EMISSAO) AND CAIXA.NR_CAIXA = "+ codCaixa +" GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)", null);
+            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, CAIXA.VL_INICIAL, SUM(NOTAFISCAL.VL_NOTAFISCAL) AS VL_ENTRADA FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND  CAIXA.NR_CAIXA = "+ codCaixa +" GROUP BY CAIXA.NR_CAIXA, CAIXA.VL_INICIAL", null);
 
             if (cursor.moveToFirst()) {
                     saldoFinal = cursor.getDouble(2) + cursor.getDouble(1);

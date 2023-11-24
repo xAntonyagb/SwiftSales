@@ -52,7 +52,7 @@ public class RelatorioCaixaDAO {
     public ArrayList<RelatorioCaixa> getRelatorioCaixa(String dataInicial, String dataFinal) {
         ArrayList<RelatorioCaixa> listaRelatorioCaixa = new ArrayList<>();
         try {
-            String sql = "SELECT CAIXA.NR_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, NOTAFISCAL.DT_EMISSAO FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA  GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)";
+            String sql = "SELECT CAIXA.NR_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 7, 4) || '-' || SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 4, 2) || '-' || SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 1, 2) AS DT_EMISSAO  FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA  GROUP BY CAIXA.NR_CAIXA, SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 7, 4) || '-' || SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 4, 2) || '-' || SUBSTR(CAST(NOTAFISCAL.DT_EMISSAO AS CHAR(10)), 1, 2)";
             System.out.println(sql);
             Cursor cursor = bd.rawQuery(sql, null);
             if (cursor.moveToFirst()) {
@@ -63,7 +63,8 @@ public class RelatorioCaixaDAO {
                     caixa = CaixaDAO.getInstancia(context).getById(numeroCaixa);
                     relatorioCaixa.setCaixa(caixa);
                     relatorioCaixa.setQtVendas(cursor.getInt(1));
-                    relatorioCaixa.setVlSaldo(cursor.getDouble(2) - caixa.getVlInicial());
+                    relatorioCaixa.setVlSaldo(cursor.getDouble(2) + caixa.getVlInicial());
+                    relatorioCaixa.setData(cursor.getString(3));
                     listaRelatorioCaixa.add(relatorioCaixa);
                 } while (cursor.moveToNext());
             }

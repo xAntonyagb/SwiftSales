@@ -90,7 +90,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Valor Total: R$ "
+        android:text="Valor Total(R$):"
         android:layout_marginLeft="20dp"
         android:fontFamily="@font/jaldi"
         android:textColor="@color/black"
@@ -103,7 +103,7 @@
             android:textColor="@color/swiftSales_background_button_gray"
             android:fontFamily="@font/jaldi"
             android:textSize="20sp"
-            android:id="@+id/tvValorTotalAbrirCaixa"/>
+            android:id="@+id/tvValorTotal"/>
 
     </LinearLayout>
     <Button
