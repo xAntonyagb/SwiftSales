@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="10dp"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="5dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/swiftSales_background_branco">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,6 +127,7 @@
                         android:backgroundTint="@color/swiftSales_red"
                         android:elevation="5dp"
                         android:padding="2dp"
+                        android:layout_marginRight="28dp"
                         android:src="@drawable/ic_deletar"
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:ignore="MissingConstraints" />

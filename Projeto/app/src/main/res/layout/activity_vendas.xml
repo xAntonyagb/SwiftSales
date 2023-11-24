@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/swiftSales_background_branco"
     tools:context=".view.VendasActivity">
 
 
@@ -117,7 +118,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="35dp"
+                android:layout_width="43dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -129,9 +130,9 @@
             <TextView
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="15dp"
                 android:fontFamily="@font/jaldi"
                 android:text="Produto"/>
 
@@ -141,17 +142,19 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:layout_marginLeft="15dp"
                 android:fontFamily="@font/jaldi"
                 android:text="Qtd"/>
 
 
             <TextView
-                android:layout_width="85dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="20dp"
+                android:gravity="center"
                 android:fontFamily="@font/jaldi"
                 android:text="Valor Unit."/>
 

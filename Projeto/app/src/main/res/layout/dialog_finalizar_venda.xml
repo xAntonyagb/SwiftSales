@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/swiftSales_background_branco"
+    >
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/alToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/swiftSales_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FINALIZAR VERDA"
+                android:fontFamily="@font/gugi"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar"
+                app:layout_constraintStart_toStartOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                android:id="@+id/tvToolbarTitulo"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_backarrow"
+                android:rotation="90"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ivVoltar"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/alToolbar"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/lnIdenfVenda"
+        android:layout_marginBottom="5dp"
+        android:background="@color/swiftSales_CinzaBts">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_venda"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alToolbar"
+            android:text="VENDA Nº"
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tvNumeroVenda"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clValorTotal"
+        android:layout_below="@+id/lnIdenfVenda"
+        android:layout_margin="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VALOR TOTAL:"
+            android:textColor="@color/swiftSales_VerdeForte"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R$"
+            android:textColor="@color/swiftSales_VerdeForte"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvVlTotalVenda"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tvVlTotalVenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/swiftSales_VerdeForte"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/clValorTotal"
+        android:id="@+id/lnDivisoria"
+        android:layout_marginHorizontal="14dp"
+        android:background="@color/swiftSales_background_button_gray"
+        tools:ignore="Orientation">
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnDivisoria"
+        android:id="@+id/clFormaPagamento"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="35dp">
+
+        <TextView
+            android:id="@+id/tvFormaPagamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FORMA DE PAGAMENTO:"
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+        <Spinner
+            android:id="@+id/spFormaPagamento"
+            android:layout_width="172dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="40dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvFormaPagamento"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clFormaPagamento"
+        android:id="@+id/clCliente"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tvCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLIENTE:"
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+        <Spinner
+            android:id="@+id/spCliente"
+            android:layout_width="193dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvCliente"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clVendedor"
+        android:layout_below="@+id/clCliente"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tvVendedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VENDEDOR:"
+            android:textColor="@color/swiftSales_background_button_gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+        <Spinner
+            android:id="@+id/spVendedor"
+            android:layout_width="172dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvVendedor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/clVendedor"
+        android:id="@+id/lnBotoesVenda"
+        android:paddingHorizontal="20dp">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/swiftSales_red"
+            android:id="@+id/btCancelar"
+            android:layout_weight="5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_cancelar"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CANCELAR"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#420C16"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="6"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btConcluir"
+            android:backgroundTint="@color/swiftSales_AzulBt">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_confirmar_compra"
+                    app:tint="#0C1E3A"
+                    android:layout_marginRight="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CONCLUIR"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#0C1E3A"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
