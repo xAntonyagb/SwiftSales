@@ -49,7 +49,7 @@ public class RelatorioCaixaDAO {
     public ArrayList<RelatorioCaixa> getRelatorioCaixa(String dataInicial, String dataFinal) {
         ArrayList<RelatorioCaixa> listaRelatorioCaixa = new ArrayList<>();
         try {
-            Cursor cursor = bd.rawQuery("SELECT CAIXA.CD_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, NOTAFISCAL.DT_EMISSAO FROM CAIXA, NOTAFISCAL WHERE CAIXA.CD_CAIXA = NOTAFISCAL.NR_CAIXA AND TRUNC(NOTAFISCAL.DT_EMISSAO) BETWEEN '" + dataInicial + "' AND '" + dataFinal + "' GROUP BY CAIXA.CD_CAIXA, TRUNC(NOTAFISCAL.DT_EMISSAO)", null);
+            Cursor cursor = bd.rawQuery("SELECT CAIXA.NR_CAIXA, COUNT(NOTAFISCAL.NR_NOTAFISCAL) AS QT_TOTVENDA, SUM(NOTAFISCAL.VL_NOTAFISCAL)  AS VL_SALDO, NOTAFISCAL.DT_EMISSAO FROM CAIXA, NOTAFISCAL WHERE CAIXA.NR_CAIXA = NOTAFISCAL.NR_CAIXA AND DATE(NOTAFISCAL.DT_EMISSAO) BETWEEN '" + dataInicial + "' AND '" + dataFinal + "' GROUP BY CAIXA.NR_CAIXA, DATE(NOTAFISCAL.DT_EMISSAO)", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {

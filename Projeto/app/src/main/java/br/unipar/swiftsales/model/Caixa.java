@@ -8,7 +8,6 @@ import br.unipar.swiftsales.enums.StatusCaixaEnum;
 
 public class Caixa {
     private int nrCaixa;
-
     private ArrayList<NotaFiscal> listaNotas;
     private double vlInicial;
     private double vlFinal;
