@@ -65,7 +65,6 @@ public class ProdutoActivity extends AppCompatActivity {
         edBuscarProduto = findViewById(R.id.edBuscarProduto);
         rvProdutos = findViewById(R.id.rvProdutos);
         controller = new ProdutoController(this);
-
         ivVoltar = findViewById(R.id.ivVoltar);
         ivVoltar.setOnClickListener(view -> finish());
 
@@ -181,10 +180,10 @@ public class ProdutoActivity extends AppCompatActivity {
     public void salvarProduto() {
         String retorno = controller.salvarProduto(controller.retornaProximoCodigo(), edDescricao.getText().toString(), edValor.getText().toString(), edQuantidade.getText().toString());
         if (retorno != null) {
-            if (retorno.contains("Código")) {
-                edCodigo.setError(retorno);
-                edCodigo.requestFocus();
-            } else if (retorno.contains("Descrição")) {
+            if (retorno.contains("Código")){
+                System.out.println(retorno);
+            }
+             if (retorno.contains("Descrição")) {
                 edDescricao.setError(retorno);
                 edDescricao.requestFocus();
             } else if (retorno.contains("Valor")) {
