@@ -46,7 +46,7 @@ public class ProdutoController {
             }
             Produto produto = ProdutoDAO.getInstancia(context).getById(Integer.parseInt(cdProduto));
 
-            if(produto != null) {
+            if(produto.getCdProduto() != 0) {
                 return "Código ("+cdProduto+") já cadastrado.";
             }else {
                 produto = new Produto();

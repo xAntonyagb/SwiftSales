@@ -121,8 +121,8 @@ public class ProdutoDAO implements GenericDAO<Produto>{
                 produto.setDsProduto(cursor.getString(1));
                 produto.setVlProduto(cursor.getDouble(2));
                 produto.setQtProduto(cursor.getInt(3));
+                return produto;
             }
-            return produto;
         } catch (SQLException ex) {
             Log.e("ERRO","ProdutoDAO.getById():" +ex.getMessage());
         }
@@ -131,7 +131,7 @@ public class ProdutoDAO implements GenericDAO<Produto>{
 
     public int getProximoCodigo(){
         try {
-            Cursor cursor = bd.rawQuery("SELECT MAX(CD_PRODUTO) FROM PRODUTO", null);
+            Cursor cursor = bd.rawQuery("SELECT COALESCE (MAX(CD_PRODUTO),0) FROM PRODUTO", null);
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0) + 1;
             }
