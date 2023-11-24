@@ -44,6 +44,12 @@ public class CaixaActivity extends AppCompatActivity {
     private LinearLayout lnCaixasAbertos2;
     private EditText edSaldoInicia;
     private EditText edSaldoFinal;
+    private EditText edSaldoInicialFechamento;
+    private EditText edSaldoFinalFechamento;
+    private TextView tvValorTotalFechamento;
+    private Button btnFecharCaixa;
+
+    private TextView tvSaldoAberto;
 
     private static Caixa caixa;
 
@@ -67,16 +73,15 @@ public class CaixaActivity extends AppCompatActivity {
         btAbrirCaixa = findViewById(R.id.btAbrirCaixa);
         lnCaixasAbertos = findViewById(R.id.lnCaixasAbertos);
         lnCaixasAbertos2 = findViewById(R.id.lnCaixasAbertos2);
-
+        tvSaldoAberto = findViewById(R.id.tvSaldoAberto);
 
         btFecharCaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (lnCaixasAbertos.getVisibility() == View.INVISIBLE) {
+                if (!CaixaDAO.getInstancia(getApplicationContext()).isCaixaAberto()) {
                     exibirMensagemErro("Nenhum caixa aberto para fechar!");
                 } else {
-
-                exibirFecharCaixa();
+                  exibirFecharCaixa();
                 }
             }
         });
@@ -90,39 +95,24 @@ public class CaixaActivity extends AppCompatActivity {
                 }
             }
         });
-
-    }
-
-    private void carregarValorInicial() {
-        EditText edSaldoInicial = dialog_abrir_caixa.findViewById(R.id.edSaldoInicial);
-        EditText edSaldoFinal = dialog_abrir_caixa.findViewById(R.id.edSaldoFinal);
-        CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
-
-        if (caixaDAO.isCaixaAberto()) {
-            double valorInicial = caixaDAO.getValorInicial();
-
-
-            if (valorInicial != -1) {
-                edSaldoInicial.setText(String.format(Locale.getDefault(), "R$ %.2f", valorInicial));
-            }
+        if (CaixaDAO.getInstancia(getApplicationContext()).isCaixaAberto()) {
+            lnCaixasAbertos.setVisibility(View.VISIBLE);
+            lnCaixasAbertos2.setVisibility(View.VISIBLE);
+            edCaixaFechado.setVisibility(View.GONE);
+            btFecharCaixa.setVisibility(View.VISIBLE);
+            btAbrirCaixa.setVisibility(View.GONE);
+            updateCurrentDate();
         } else {
-
-            edSaldoInicial.setText("0,00");
+            lnCaixasAbertos.setVisibility(View.GONE);
+            lnCaixasAbertos2.setVisibility(View.GONE);
+            edCaixaFechado.setVisibility(View.VISIBLE);
+            btFecharCaixa.setVisibility(View.GONE);
+            btAbrirCaixa.setVisibility(View.VISIBLE);
         }
+
+        tvSaldoAberto.setText(String.format(Locale.getDefault(), "R$ %.2f", CaixaDAO.getInstancia(getApplicationContext()).retornaSaldoFinal(1)));
     }
-        public void salvarValorInicial (View view){
-            EditText edSaldoInicial = dialog_abrir_caixa.findViewById(R.id.edSaldoInicial);
-            EditText edSaldoFinal = dialog_abrir_caixa.findViewById(R.id.edSaldoFinal);
-            String valorInicialStr = edSaldoInicial.getText().toString();
 
-            if (!valorInicialStr.isEmpty()) {
-
-                double valorInicial = Double.parseDouble(valorInicialStr);
-                CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
-                caixaDAO.salvarValorInicial(valorInicial);
-                edSaldoInicial.setText(String.format(Locale.getDefault(), "R$ %.2f", valorInicial));
-            }
-        }
 
 
     public void exibirAbrirCaixa () {
@@ -138,7 +128,6 @@ public class CaixaActivity extends AppCompatActivity {
         });
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewAlert);
-        builder.setCancelable(false);//Não permite cancelar o AlertDialog
         dialog_abrir_caixa = builder.create();
         dialog_abrir_caixa.show();
     }
@@ -163,52 +152,77 @@ public class CaixaActivity extends AppCompatActivity {
             edSaldoInicial.setError("Informe o valor inicial!");
             edSaldoInicial.requestFocus();
         }
+        if (caixaDAO.isCaixaAberto()) {
+            lnCaixasAbertos.setVisibility(View.VISIBLE);
+            lnCaixasAbertos2.setVisibility(View.VISIBLE);
+            edCaixaFechado.setVisibility(View.GONE);
+            btFecharCaixa.setVisibility(View.VISIBLE);
+            btAbrirCaixa.setVisibility(View.GONE);
+            updateCurrentDate();
+        } else {
+            lnCaixasAbertos.setVisibility(View.GONE);
+            lnCaixasAbertos2.setVisibility(View.GONE);
+            edCaixaFechado.setVisibility(View.VISIBLE);
+            btFecharCaixa.setVisibility(View.GONE);
+            btAbrirCaixa.setVisibility(View.VISIBLE);
+        }
+        tvSaldoAberto.setText(String.format(Locale.getDefault(), "R$ %.2f", CaixaDAO.getInstancia(getApplicationContext()).retornaSaldoFinal(1)));
+
 
     }
 
-
     public void exibirFecharCaixa() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View dialogView = getLayoutInflater().inflate(R.layout.dialog_fechar_caixa, null);
-            builder.setView(dialogView);
-            dialog_fechar_caixa = builder.create();
-            dialog_fechar_caixa.show();
+        View viewAlert = getLayoutInflater().inflate(R.layout.dialog_fechar_caixa, null);
+        edSaldoInicialFechamento = viewAlert.findViewById(R.id.edSaldoInicial);
+        edSaldoFinalFechamento = viewAlert.findViewById(R.id.edSaldoFinal);
+        tvValorTotalFechamento = viewAlert.findViewById(R.id.tvValorTotal);
 
-            EditText edSaldoInicial = dialog_fechar_caixa.findViewById(R.id.edSaldoInicial);
-            EditText edSaldoFinal = dialog_fechar_caixa.findViewById(R.id.edSaldoFinal);
+        btnFecharCaixa = viewAlert.findViewById(R.id.btnFecharCaixa);
 
+        CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
+        Caixa caixa = caixaDAO.getById(1);
+        if (caixa != null) {
+            edSaldoInicialFechamento.setText(String.format(Locale.getDefault(), "R$ %.2f", caixa.getVlInicial()));
+            edSaldoFinalFechamento.setText(String.format(Locale.getDefault(), "R$ %.2f", caixa.getVlFinal()));
+            double vlTotal = caixaDAO.retornaSaldoFinal(caixa.getNrCaixa());
+            tvValorTotalFechamento.setText(String.format(Locale.getDefault(), "R$ %.2f",  vlTotal));
 
-            Button btnFecharCaixa = dialogView.findViewById(R.id.btnFecharCaixa);
-            btnFecharCaixa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    CaixaDAO caixaDAO = CaixaDAO.getInstancia(getApplicationContext());
-
-                    caixa.setStCaixa(StatusCaixaEnum.FECHADO);
-                    caixa.setVlFinal(caixaDAO.retornaSaldoFinal(caixa.getNrCaixa()));
-                    caixa.setDtCaixa(getDataAtual());
-
-                    caixaDAO.update(caixa);
-                    abrirTelaPrincipal();
-
-                    }
-            });
-            updateCurrentDate();
-            dialog_fechar_caixa.dismiss();
         }
+        btnFecharCaixa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fecharCaixa();
+            }
+        });
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(viewAlert);
+        dialog_fechar_caixa = builder.create();
+        dialog_fechar_caixa.show();
+    }
+    private void fecharCaixa() {
+        CaixaDAO caixaDAO = CaixaDAO.getInstancia(this);
+        Caixa caixa = caixaDAO.getById(1);
+        caixa.setStCaixa(StatusCaixaEnum.FECHADO);
+        caixa.setVlFinal(caixaDAO.retornaSaldoFinal(caixa.getNrCaixa()));
+        caixa.setDtCaixa(getDataAtual());
+        caixaDAO.update(caixa);
+        dialog_fechar_caixa.dismiss();
+        abrirTelaPrincipal();
+    }
 
 
-        private void updateCurrentDate () {
-            Date currentDate = Calendar.getInstance().getTime();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String formattedDate = dateFormat.format(currentDate);
-            atvData.setText(formattedDate);
-        }
+    private void updateCurrentDate () {
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = dateFormat.format(currentDate);
+        atvData.setText(formattedDate);
+    }
 
-        public void abrirRelatorios (View view){
-            Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
-            startActivity(intent);
-        }
+    public void abrirRelatorios (View view){
+        Intent intent = new Intent(CaixaActivity.this, RelatorioActivity.class);
+        startActivity(intent);
+    }
 
 
     private void exibirMensagemErro(String mensagem) {

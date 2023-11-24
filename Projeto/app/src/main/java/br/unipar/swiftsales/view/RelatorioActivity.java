@@ -30,7 +30,9 @@ public class RelatorioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio);
         edDataFinal = findViewById(R.id.edDataFinal);
+        edDataFinal.setText("24/11/2023");
         edDataInicial = findViewById(R.id.edDataInicial);
+        edDataInicial.setText("24/11/2023");
         btGerarRelatorio = findViewById(R.id.btGerarRelatorio);
         rvRelatorio = findViewById(R.id.rvRelatorio);
         btGerarRelatorio.setOnClickListener(new View.OnClickListener() {
